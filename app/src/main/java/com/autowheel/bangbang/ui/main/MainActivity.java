@@ -1,20 +1,17 @@
-package com.autowheel.didi.ui.main;
+package com.autowheel.bangbang.ui.main;
 
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.autowheel.didi.R;
-import com.autowheel.didi.base.BaseActivity;
-import com.autowheel.didi.base.BaseViewBindingActivity;
-import com.autowheel.didi.databinding.ActivityMainBinding;
+import com.autowheel.bangbang.base.BaseViewBindingActivity;
+import com.autowheel.bangbang.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,7 +28,7 @@ public class MainActivity extends BaseViewBindingActivity<ActivityMainBinding> {
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
         initToolbar();
-        setTitle("校内滴滴");
+        setTitle("学长帮帮忙");
         initRecyclerView();
     }
 

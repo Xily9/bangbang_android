@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.0"
 
     defaultConfig {
-        applicationId "com.autowheel.didi"
+        applicationId "com.autowheel.bangbang"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

@@ -1,10 +1,8 @@
-package com.autowheel.didi.utils
+package com.autowheel.bangbang.utils
 
-import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
-import com.autowheel.didi.MyApplication
+import com.autowheel.bangbang.MyApplication
 import es.dmoral.toasty.Toasty
 
 /**

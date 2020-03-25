@@ -1,15 +1,10 @@
-package com.autowheel.didi.ui.main;
+package com.autowheel.bangbang.ui.main;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.autowheel.didi.base.BaseAdapter;
-import com.autowheel.didi.base.BaseViewBindingAdapter;
-import com.autowheel.didi.databinding.ItemMainBinding;
+import com.autowheel.bangbang.base.BaseViewBindingAdapter;
+import com.autowheel.bangbang.databinding.ItemMainBinding;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

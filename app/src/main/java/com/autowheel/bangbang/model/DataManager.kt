@@ -1,4 +1,4 @@
-package com.autowheel.didi.model
+package com.autowheel.bangbang.model
 
 /**
  * Created by Xily on 2020/3/5.

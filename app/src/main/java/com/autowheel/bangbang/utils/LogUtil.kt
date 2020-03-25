@@ -1,7 +1,7 @@
-package com.autowheel.didi.utils
+package com.autowheel.bangbang.utils
 
 import android.util.Log
-import com.autowheel.didi.BuildConfig
+import com.autowheel.bangbang.BuildConfig
 
 private val isDebug = BuildConfig.DEBUG //调试模式
 private const val TAG = "didi"

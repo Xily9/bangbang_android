@@ -1,4 +1,4 @@
-package com.autowheel.didi.base
+package com.autowheel.bangbang.base
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.autowheel.didi.utils
+package com.autowheel.bangbang.utils
 
 import android.app.Activity
 import android.content.Context
@@ -13,7 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.autowheel.didi.MyApplication
+import com.autowheel.bangbang.MyApplication
 
 
 private val outMetrics by lazy {

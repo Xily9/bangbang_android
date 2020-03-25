@@ -1,4 +1,4 @@
-package com.autowheel.didi;
+package com.autowheel.bangbang;
 
 import android.app.Application;
 
