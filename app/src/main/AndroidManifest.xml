@@ -18,5 +18,6 @@
         </activity>
         <activity android:name=".ui.user.LoginActivity" />
         <activity android:name=".ui.user.RegActivity" />
+        <activity android:name=".ui.user.VerifyActivity"/>
     </application>
 </manifest>

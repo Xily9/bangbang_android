@@ -11,6 +11,7 @@ import com.autowheel.bangbang.model.network.RetrofitHelper;
 import com.autowheel.bangbang.model.network.bean.request.LoginRequestBean;
 import com.autowheel.bangbang.model.network.bean.response.GeneralResponseBean;
 import com.autowheel.bangbang.model.network.bean.response.LoginResponseBean;
+import com.autowheel.bangbang.model.network.bean.response.VerifyResponseBean;
 import com.autowheel.bangbang.ui.MainActivity;
 import com.autowheel.bangbang.utils.DeviceUtilKt;
 import com.autowheel.bangbang.utils.LogUtilKt;
@@ -43,7 +44,8 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
             login();
         });
         getViewBinding().tvRegister.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegActivity.class));
+            LogUtilKt.debug("test","success!");
+            startActivity(new Intent(this, VerifyActivity.class));
         });
         getViewBinding().tvForgetPassword.setOnClickListener(v -> {
 
@@ -75,6 +77,8 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
                         ToastyUtilKt.toastError(loginResponseBean.getMsg());
                     }
                 }
+
+
 
                 @Override
                 public void onFailure(Call<GeneralResponseBean<LoginResponseBean>> call, Throwable t) {

@@ -2,8 +2,10 @@ package com.autowheel.bangbang.model.network.service
 
 import com.autowheel.bangbang.model.network.bean.request.LoginRequestBean
 import com.autowheel.bangbang.model.network.bean.request.RegisterRequestBean
+import com.autowheel.bangbang.model.network.bean.request.VerifyRequestBean
 import com.autowheel.bangbang.model.network.bean.response.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.response.LoginResponseBean
+import com.autowheel.bangbang.model.network.bean.response.VerifyResponseBean
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -17,4 +19,7 @@ interface ApiService {
 
     @POST("/auth/register")
     fun register(@Body registerRequestBean: RegisterRequestBean): Call<GeneralResponseBean<Nothing>>
+
+    @POST("/auth/verify")
+    fun verify(@Body verifyRequestBean: VerifyRequestBean): Call<GeneralResponseBean<VerifyResponseBean>>
 }
