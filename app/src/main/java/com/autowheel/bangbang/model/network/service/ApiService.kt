@@ -12,9 +12,9 @@ import retrofit2.http.POST
  * Created by Xily on 2020/3/25.
  */
 interface ApiService {
-    @POST
+    @POST("/auth/login")
     fun login(@Body loginRequestBean: LoginRequestBean): Call<GeneralResponseBean<LoginResponseBean>>
 
-    @POST
+    @POST("/auth/register")
     fun register(@Body registerRequestBean: RegisterRequestBean): Call<GeneralResponseBean<Nothing>>
 }

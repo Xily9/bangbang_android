@@ -19,5 +19,5 @@
         android:singleLine="true"
         android:textAppearance="?attr/titleTextAppearance"
         android:textColor="?attr/titleTextColor"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 </androidx.appcompat.widget.Toolbar>

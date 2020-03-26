@@ -17,9 +17,9 @@ abstract class BaseViewBindingActivity<T : ViewBinding> : AppCompatActivity() {
         _viewBinding = initViewBinding()
         //设置布局内容
         setContentView(_viewBinding.root)
+        setDarkStatusIcon(true)
         //初始化控件
         initViews(savedInstanceState)
-        setDarkStatusIcon(true)
     }
 
     fun getViewBinding(): T = _viewBinding

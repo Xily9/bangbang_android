@@ -6,9 +6,12 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
+import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.ui.index.IndexFragment
 import com.autowheel.bangbang.ui.msg.MsgFragment
+import com.autowheel.bangbang.ui.user.LoginActivity
 import com.autowheel.bangbang.ui.user.UserFragment
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -27,6 +30,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
+        if (DataManager.token.isEmpty()) {
+            startActivity<LoginActivity>()
+            finish()
+            return
+        }
         initFragment()
         initBottomNavigationView()
     }
