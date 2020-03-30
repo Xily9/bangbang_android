@@ -3,17 +3,11 @@ package com.autowheel.bangbang.ui.user;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 
-import com.autowheel.bangbang.R;
 import com.autowheel.bangbang.base.BaseViewBindingActivity;
 import com.autowheel.bangbang.databinding.ActivityVerifyBinding;
-import com.autowheel.bangbang.model.DataManager;
 import com.autowheel.bangbang.model.network.RetrofitHelper;
-import com.autowheel.bangbang.model.network.bean.request.VerifyRequestBean;
-import com.autowheel.bangbang.model.network.bean.response.GeneralResponseBean;
-import com.autowheel.bangbang.model.network.bean.response.VerifyResponseBean;
-import com.autowheel.bangbang.utils.DeviceUtilKt;
+import com.autowheel.bangbang.model.network.bean.GeneralResponseBean;
 import com.autowheel.bangbang.utils.ToastyUtilKt;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,8 +31,6 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
         initToolbar();
-        DeviceUtilKt.setStatusBarUpper(this);
-        DeviceUtilKt.setDarkStatusIcon(this, false);
         getViewBinding().btnVerify.setOnClickListener(v -> {
             verify();
         });
@@ -53,34 +45,25 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("认证中...");
             progressDialog.show();
-            VerifyRequestBean verifyRequestBean = new VerifyRequestBean(username, password);
-            RetrofitHelper.getApiService().verify(verifyRequestBean).enqueue(new Callback<GeneralResponseBean<VerifyResponseBean>>() {
-                private Call<GeneralResponseBean<VerifyResponseBean>> call;
-                private Throwable t;
+            RetrofitHelper.getApiService().verify(username, password)
+                    .enqueue(new Callback<GeneralResponseBean<Object>>() {
+                        @Override
+                        public void onResponse(Call<GeneralResponseBean<Object>> call, Response<GeneralResponseBean<Object>> response) {
+                            GeneralResponseBean<Object> verifyResponseBean = response.body();
+                            if (verifyResponseBean.getCode() == 0) {
+                                ToastyUtilKt.toastSuccess("认证成功!");
+                                Intent intent = new Intent(VerifyActivity.this, RegActivity.class);
+                                startActivity(intent);
+                            } else {
+                                ToastyUtilKt.toastError(verifyResponseBean.getMsg());
+                            }
+                        }
 
-                @Override
-                public void onResponse(Call<GeneralResponseBean<VerifyResponseBean>> call, Response<GeneralResponseBean<VerifyResponseBean>> response) {
-                    //progressDialog.dismiss();
-                    GeneralResponseBean<VerifyResponseBean> verifyResponseBean = response.body();
-                    if (verifyResponseBean.getCode() == 0) {
-                        String token = verifyResponseBean.getData().getToken();
-                        DataManager.INSTANCE.setToken(token);
-                        ToastyUtilKt.toastSuccess("认证成功!");
-                        Intent intent = new Intent(VerifyActivity.this, RegActivity.class);
-                        startActivity(intent);
-                    } else {
-                        ToastyUtilKt.toastError(verifyResponseBean.getMsg());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<GeneralResponseBean<VerifyResponseBean>> call, Throwable t) {
-                    this.call = call;
-                    this.t = t;
-                    //progressDialog.dismiss();
-                    ToastyUtilKt.toastError("网络请求出错!");
-                }
-            });
+                        @Override
+                        public void onFailure(Call<GeneralResponseBean<Object>> call, Throwable t) {
+                            ToastyUtilKt.toastError("网络请求出错!");
+                        }
+                    });
         }
     }
 

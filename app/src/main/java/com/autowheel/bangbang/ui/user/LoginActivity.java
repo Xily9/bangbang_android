@@ -8,13 +8,10 @@ import com.autowheel.bangbang.base.BaseViewBindingActivity;
 import com.autowheel.bangbang.databinding.ActivityLoginBinding;
 import com.autowheel.bangbang.model.DataManager;
 import com.autowheel.bangbang.model.network.RetrofitHelper;
-import com.autowheel.bangbang.model.network.bean.request.LoginRequestBean;
-import com.autowheel.bangbang.model.network.bean.response.GeneralResponseBean;
-import com.autowheel.bangbang.model.network.bean.response.LoginResponseBean;
-import com.autowheel.bangbang.model.network.bean.response.VerifyResponseBean;
+import com.autowheel.bangbang.model.network.bean.GeneralResponseBean;
+import com.autowheel.bangbang.model.network.bean.LoginBean;
 import com.autowheel.bangbang.ui.MainActivity;
 import com.autowheel.bangbang.utils.DeviceUtilKt;
-import com.autowheel.bangbang.utils.LogUtilKt;
 import com.autowheel.bangbang.utils.ToastyUtilKt;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,11 +37,9 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
         DeviceUtilKt.setStatusBarUpper(this);
         DeviceUtilKt.setDarkStatusIcon(this, false);
         getViewBinding().btnLogin.setOnClickListener(v -> {
-            LogUtilKt.debug("test", "我被点击了!");
             login();
         });
         getViewBinding().tvRegister.setOnClickListener(v -> {
-            LogUtilKt.debug("test","success!");
             startActivity(new Intent(this, VerifyActivity.class));
         });
         getViewBinding().tvForgetPassword.setOnClickListener(v -> {
@@ -61,12 +56,11 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("登陆中...");
             progressDialog.show();
-            LoginRequestBean loginRequestBean = new LoginRequestBean(username, password);
-            RetrofitHelper.getApiService().login(loginRequestBean).enqueue(new Callback<GeneralResponseBean<LoginResponseBean>>() {
+            RetrofitHelper.getApiService().login(username, password).enqueue(new Callback<GeneralResponseBean<LoginBean>>() {
                 @Override
-                public void onResponse(Call<GeneralResponseBean<LoginResponseBean>> call, Response<GeneralResponseBean<LoginResponseBean>> response) {
-                    //progressDialog.dismiss();
-                    GeneralResponseBean<LoginResponseBean> loginResponseBean = response.body();
+                public void onResponse(Call<GeneralResponseBean<LoginBean>> call, Response<GeneralResponseBean<LoginBean>> response) {
+                    progressDialog.dismiss();
+                    GeneralResponseBean<LoginBean> loginResponseBean = response.body();
                     if (loginResponseBean.getCode() == 0) {
                         String token = loginResponseBean.getData().getToken();
                         DataManager.INSTANCE.setToken(token);
@@ -79,10 +73,9 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
                 }
 
 
-
                 @Override
-                public void onFailure(Call<GeneralResponseBean<LoginResponseBean>> call, Throwable t) {
-                    //progressDialog.dismiss();
+                public void onFailure(Call<GeneralResponseBean<LoginBean>> call, Throwable t) {
+                    progressDialog.dismiss();
                     ToastyUtilKt.toastError("网络请求出错!");
                 }
             });

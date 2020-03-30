@@ -1,13 +1,10 @@
 package com.autowheel.bangbang.model.network.service
 
-import com.autowheel.bangbang.model.network.bean.request.LoginRequestBean
-import com.autowheel.bangbang.model.network.bean.request.RegisterRequestBean
-import com.autowheel.bangbang.model.network.bean.request.VerifyRequestBean
-import com.autowheel.bangbang.model.network.bean.response.GeneralResponseBean
-import com.autowheel.bangbang.model.network.bean.response.LoginResponseBean
-import com.autowheel.bangbang.model.network.bean.response.VerifyResponseBean
+import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
+import com.autowheel.bangbang.model.network.bean.LoginBean
 import retrofit2.Call
-import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 /**
@@ -15,11 +12,31 @@ import retrofit2.http.POST
  */
 interface ApiService {
     @POST("/auth/login")
-    fun login(@Body loginRequestBean: LoginRequestBean): Call<GeneralResponseBean<LoginResponseBean>>
+    @FormUrlEncoded
+    fun login(@Field("username") username: String, @Field("password") password: String): Call<GeneralResponseBean<LoginBean>>
 
     @POST("/auth/register")
-    fun register(@Body registerRequestBean: RegisterRequestBean): Call<GeneralResponseBean<Nothing>>
+    @FormUrlEncoded
+    fun register(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("email") email: String,
+        @Field("nickname") nickname: String
+    ): Call<GeneralResponseBean<Any>>
 
     @POST("/auth/verify")
-    fun verify(@Body verifyRequestBean: VerifyRequestBean): Call<GeneralResponseBean<VerifyResponseBean>>
+    @FormUrlEncoded
+    fun verify(@Field("number") username: String, @Field("password") password: String): Call<GeneralResponseBean<Any>>
+
+    @POST("/auth/forget_password/send")
+    @FormUrlEncoded
+    fun forgetPasswordSend(@Field("email") email: String): Call<GeneralResponseBean<Any>>
+
+    @POST("/auth/forget_password")
+    @FormUrlEncoded
+    fun forgetPassword(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("verify_code") verifyCode: String
+    ): Call<GeneralResponseBean<Any>>
 }
