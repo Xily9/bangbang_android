@@ -20,5 +20,6 @@
         <activity android:name=".ui.user.RegActivity" />
         <activity android:name=".ui.user.VerifyActivity"/>
         <activity android:name=".ui.index.SearchActivity" />
+        <activity android:name=".ui.user.SettingsActivity" />
     </application>
 </manifest>
