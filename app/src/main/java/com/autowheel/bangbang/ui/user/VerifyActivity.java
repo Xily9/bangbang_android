@@ -73,7 +73,6 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
     @Override
     public void initToolbar() {
         setSupportActionBar(getViewBinding().toolbar.toolbar);
-        setTitle("");
         getViewBinding().toolbar.toolbarTitle.setText("认证");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

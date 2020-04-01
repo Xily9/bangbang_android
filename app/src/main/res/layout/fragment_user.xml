@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
+            android:id="@+id/iv_avatar"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
@@ -42,7 +42,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="邪之气" />
@@ -99,7 +99,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/ic_user_coach"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/view1"
             app:layout_constraintEnd_toEndOf="@id/view1"
@@ -144,7 +144,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/ic_user_coach_record"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/view2"
             app:layout_constraintEnd_toEndOf="@id/view2"
@@ -189,7 +189,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/ic_user_evaluate"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/view3"
             app:layout_constraintEnd_toEndOf="@id/view3"
@@ -234,7 +234,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/ic_user_help"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/view4"
             app:layout_constraintEnd_toEndOf="@id/view4"
@@ -279,7 +279,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/ic_user_study"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/view5"
             app:layout_constraintEnd_toEndOf="@id/view5"
@@ -302,8 +302,53 @@
             app:layout_constraintTop_toBottomOf="@id/view5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@id/layout_evaluate"
+        app:layout_constraintEnd_toEndOf="@id/layout_evaluate"
+        app:layout_constraintTop_toTopOf="@id/layout_help">
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_fragment_user_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user_note"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/view6"
+            app:layout_constraintEnd_toEndOf="@id/view6"
+            app:layout_constraintStart_toStartOf="@id/view6"
+            app:layout_constraintTop_toTopOf="@id/view6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="24dp"
+            android:text="我的笔记"
+            android:textColor="#101010"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"

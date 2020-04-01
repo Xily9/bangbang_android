@@ -1,22 +1,98 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    app:layoutDescription="@xml/activity_main_scene">
 
     <FrameLayout
         android:id="@+id/fragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/nav_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:background="?attr/colorPrimary"
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="@color/bottom_nav_item_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/activity_main_drawer" />
-</LinearLayout>
+
+    <ImageButton
+        android:id="@+id/iv_add"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:elevation="8dp"
+        android:background="@drawable/bg_btn_float"
+        app:layout_constraintTop_toTopOf="@id/nav_view"
+        app:layout_constraintBottom_toBottomOf="@id/nav_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_add_white_24dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_publish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintCircle="@id/iv_add"
+        app:layout_constraintCircleAngle="330"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nav_view">
+
+        <ImageButton
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_btn_float"
+            android:src="@drawable/ic_user_coach"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="辅导"
+            android:layout_marginTop="4dp"
+            android:textColor="#101010"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_publish_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintCircle="@id/iv_add"
+        app:layout_constraintCircleAngle="30"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nav_view">
+
+        <ImageButton
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_btn_float"
+            android:src="@drawable/ic_user_note"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="笔记"
+            android:layout_marginTop="4dp"
+            android:textColor="#101010"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -31,7 +31,6 @@ class MsgFragment : BaseFragment() {
 
     override fun initToolbar() {
         (requireActivity() as MainActivity).setSupportActionBar(toolbar)
-        requireActivity().title = ""
         toolbar_title.text = "消息"
     }
 

@@ -21,10 +21,10 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //设置布局内容
         setContentView(getLayoutId())
+        setDarkStatusIcon(true)
+        title = ""
         //初始化控件
         initViews(savedInstanceState)
-        setDarkStatusIcon(true)
-        //setStatusBarUpper()
     }
 
     /**
