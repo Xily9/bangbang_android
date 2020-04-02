@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by Xily on 2020/3/30.
  */
-class SettingsActivity extends BaseViewBindingActivity<ActivitySettingsBinding> {
+public class SettingsActivity extends BaseViewBindingActivity<ActivitySettingsBinding> {
     @NotNull
     @Override
     public ActivitySettingsBinding initViewBinding() {

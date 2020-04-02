@@ -31,6 +31,9 @@ class UserFragment : BaseFragment() {
         btn_logout.setOnClickListener {
             logout()
         }
+        layout_user.setOnClickListener {
+            startActivity<UserActivity>()
+        }
     }
 
     private fun logout() {

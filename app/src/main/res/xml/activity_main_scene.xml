@@ -89,11 +89,10 @@
                 app:customFloatValue="1" />
         </Constraint>
     </ConstraintSet>
-
     <Transition
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
-        app:duration="300">
+        app:duration="200">
         <OnClick
             app:targetId="@id/iv_add"
             app:clickAction="toggle" />

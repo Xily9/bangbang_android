@@ -1,0 +1,58 @@
+package com.autowheel.bangbang.ui.user;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+
+import com.autowheel.bangbang.R;
+import com.autowheel.bangbang.base.BaseViewBindingActivity;
+import com.autowheel.bangbang.databinding.ActivityUserBinding;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * Created by Xily on 2020/4/2.
+ */
+public class UserActivity extends BaseViewBindingActivity<ActivityUserBinding> {
+    @NotNull
+    @Override
+    public ActivityUserBinding initViewBinding() {
+        return ActivityUserBinding.inflate(getLayoutInflater());
+    }
+
+    @Override
+    public void initViews(@Nullable Bundle savedInstanceState) {
+        initToolbar();
+    }
+
+    @Override
+    public void initToolbar() {
+        setSupportActionBar(getViewBinding().toolbar.toolbar);
+        getViewBinding().toolbar.toolbarTitle.setText("查看资料");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_user_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_edit:
+                startActivity(new Intent(this, UserEditActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
