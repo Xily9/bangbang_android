@@ -4,15 +4,19 @@ import android.app.Application;
 
 import com.didichuxing.doraemonkit.DoraemonKit;
 
+import org.litepal.LitePal;
+
 /**
  * Created by Xily on 2020/3/5.
  */
 public class MyApplication extends Application {
     private static MyApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        LitePal.initialize(this);
         DoraemonKit.install(this);
     }
 

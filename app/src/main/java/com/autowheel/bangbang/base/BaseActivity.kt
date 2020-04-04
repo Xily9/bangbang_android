@@ -3,7 +3,14 @@ package com.autowheel.bangbang.base
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.autowheel.bangbang.utils.setDarkStatusIcon
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * Created by Xily on 2020/3/5.
@@ -39,4 +46,27 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     open fun initToolbar() {}
 
+    fun launch(
+        context: CoroutineContext = EmptyCoroutineContext,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        block: suspend CoroutineScope.() -> Unit
+    ) =
+        lifecycleScope.launch(context, start, block)
+
+    fun launch(
+        tryBlock: suspend CoroutineScope.() -> Unit,
+        catchBlock: (suspend CoroutineScope.(Throwable) -> Unit) = {},
+        finallyBlock: (suspend CoroutineScope.() -> Unit) = {}
+    ) {
+        lifecycleScope.launch {
+            try {
+                tryBlock()
+            } catch (e: CancellationException) {
+            } catch (e: Exception) {
+                catchBlock(e)
+            } finally {
+                finallyBlock()
+            }
+        }
+    }
 }

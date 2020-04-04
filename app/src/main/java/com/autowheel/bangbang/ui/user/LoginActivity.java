@@ -40,7 +40,7 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
             login();
         });
         getViewBinding().tvRegister.setOnClickListener(v -> {
-            startActivity(new Intent(this, VerifyActivity.class));
+            startActivityForResult(new Intent(this, RegActivity.class), 1);
         });
         getViewBinding().tvForgetPassword.setOnClickListener(v -> {
 
@@ -60,15 +60,19 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
                 @Override
                 public void onResponse(Call<GeneralResponseBean<LoginBean>> call, Response<GeneralResponseBean<LoginBean>> response) {
                     progressDialog.dismiss();
-                    GeneralResponseBean<LoginBean> loginResponseBean = response.body();
-                    if (loginResponseBean.getCode() == 0) {
-                        String token = loginResponseBean.getData().getToken();
-                        DataManager.INSTANCE.setToken(token);
-                        ToastyUtilKt.toastSuccess("登陆成功!");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                    if (response.isSuccessful()) {
+                        GeneralResponseBean<LoginBean> loginResponseBean = response.body();
+                        if (loginResponseBean.getCode() == 0) {
+                            String token = loginResponseBean.getData().getToken();
+                            DataManager.INSTANCE.setToken(token);
+                            ToastyUtilKt.toastSuccess("登陆成功!");
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            ToastyUtilKt.toastError(loginResponseBean.getMsg());
+                        }
                     } else {
-                        ToastyUtilKt.toastError(loginResponseBean.getMsg());
+                        ToastyUtilKt.toastError("网络请求出错!");
                     }
                 }
 
@@ -79,6 +83,16 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
                     ToastyUtilKt.toastError("网络请求出错!");
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            getViewBinding().etUsername.setText(data.getStringExtra("username"));
+            getViewBinding().etPassword.setText(data.getStringExtra("password"));
+            getViewBinding().btnLogin.performClick();
         }
     }
 }

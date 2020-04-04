@@ -17,12 +17,12 @@ interface ApiService {
 
     @POST("/auth/register")
     @FormUrlEncoded
-    fun register(
+    suspend fun register(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("email") email: String,
         @Field("nickname") nickname: String
-    ): Call<GeneralResponseBean<Any>>
+    ): GeneralResponseBean<Any>
 
     @POST("/auth/verify")
     @FormUrlEncoded

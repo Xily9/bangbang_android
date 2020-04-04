@@ -1,11 +1,8 @@
 package com.autowheel.bangbang.utils
 
 import android.app.Activity
-import android.app.Service
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
@@ -62,70 +59,6 @@ fun Activity.getAttrColor(resId: Int): Int {
 
 fun Fragment.getAttrColor(resId: Int): Int {
     return activity?.getAttrColor(resId) ?: 0
-}
-
-/**
- * otherTools
- */
-inline fun <reified T : Activity> Activity.startActivity() {
-    val intent = Intent(this, T::class.java)
-    this.startActivity(intent)
-}
-
-inline fun <reified T : Activity> Fragment.startActivity() {
-    val intent = Intent(context, T::class.java)
-    startActivity(intent)
-}
-
-inline fun <reified T : Activity> Activity.startActivity(bundle: Bundle) {
-    val intent = Intent(this, T::class.java)
-    intent.putExtras(bundle)
-    startActivity(intent)
-}
-
-inline fun <reified T : Activity> Fragment.startActivity(bundle: Bundle) {
-    val intent = Intent(context, T::class.java)
-    intent.putExtras(bundle)
-    startActivity(intent)
-}
-
-inline fun <reified T : Activity> Activity.startActivity(extras: Intent) {
-    val intent = Intent(this, T::class.java)
-    intent.putExtras(extras)
-    startActivity(intent)
-}
-
-inline fun <reified T : Activity> Fragment.startActivity(extras: Intent) {
-    val intent = Intent(context, T::class.java)
-    intent.putExtras(extras)
-    startActivity(intent)
-}
-
-inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: Int) {
-    val intent = Intent(this, T::class.java)
-    startActivityForResult(intent, requestCode)
-}
-
-inline fun <reified T : Activity> Fragment.startActivityForResult(requestCode: Int) {
-    val intent = Intent(context, T::class.java)
-    startActivityForResult(intent, requestCode)
-}
-
-inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: Int, bundle: Bundle) {
-    val intent = Intent(this, T::class.java)
-    intent.putExtras(bundle)
-    startActivityForResult(intent, requestCode)
-}
-
-inline fun <reified T : Activity> Fragment.startActivityForResult(requestCode: Int, bundle: Bundle) {
-    val intent = Intent(context, T::class.java)
-    intent.putExtras(bundle)
-    startActivityForResult(intent, requestCode)
-}
-
-inline fun <reified T : Service> Activity.startService() {
-    val intent = Intent(this, T::class.java)
-    startService(intent)
 }
 
 inline fun checkTime(func: () -> Unit) {

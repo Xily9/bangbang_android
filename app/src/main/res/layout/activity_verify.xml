@@ -25,7 +25,7 @@
 
 
     <EditText
-        android:id="@+id/etStudentPassword"
+        android:id="@+id/et_student_password"
         android:layout_width="215dp"
         android:layout_height="45dp"
         android:layout_marginTop="25dp"
@@ -37,10 +37,10 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etStudentId" />
+        app:layout_constraintTop_toBottomOf="@+id/et_student_id" />
 
     <EditText
-        android:id="@+id/etStudentId"
+        android:id="@+id/et_student_id"
         android:layout_width="215dp"
         android:layout_height="45dp"
         android:layout_marginTop="25dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/btnVerify"
+        android:id="@+id/btn_verify"
         android:layout_width="215dp"
         android:layout_height="45dp"
         android:layout_marginTop="64dp"
@@ -65,5 +65,5 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etStudentPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/et_student_password" />
 </androidx.constraintlayout.widget.ConstraintLayout>

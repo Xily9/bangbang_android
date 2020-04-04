@@ -60,6 +60,8 @@ dependencies {
     implementation 'org.litepal.android:kotlin:3.0.0'
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.jeremyliao:live-event-bus-x:1.5.7'
+    implementation 'co.lujun:androidtagview:1.1.7'
+    implementation 'com.vanniktech:emoji-ios:0.6.0'
     debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'
     releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.1'
 }
