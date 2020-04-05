@@ -54,6 +54,7 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:background="@drawable/bg_btn_float"
+            android:clickable="false"
             android:src="@drawable/ic_user_coach"
             android:tint="@color/white" />
 
@@ -83,6 +84,7 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:background="@drawable/bg_btn_float"
+            android:clickable="false"
             android:src="@drawable/ic_user_note"
             android:tint="@color/white" />
 

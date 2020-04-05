@@ -43,5 +43,8 @@
         <activity android:name=".ui.user.AvatarActivity" />
         <activity android:name=".ui.user.UserActivity" />
         <activity android:name=".ui.user.UserEditActivity" />
+        <activity android:name=".ui.note.NoteDetailActivity" />
+        <activity android:name=".ui.note.NotePublishActivity" />
+        <activity android:name=".ui.index.PublishActivity" />
     </application>
 </manifest>

@@ -62,6 +62,12 @@ dependencies {
     implementation 'com.jeremyliao:live-event-bus-x:1.5.7'
     implementation 'co.lujun:androidtagview:1.1.7'
     implementation 'com.vanniktech:emoji-ios:0.6.0'
+    final def markwon_version = '4.3.1'
+    implementation "io.noties.markwon:core:$markwon_version"
+    implementation "io.noties.markwon:editor:$markwon_version"
+    implementation "io.noties.markwon:image-glide:$markwon_version"
+    implementation "io.noties.markwon:ext-tables:$markwon_version"
+    implementation 'com.github.arcadefire:nice-spinner:1.4.3'
     debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'
     releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.1'
 }

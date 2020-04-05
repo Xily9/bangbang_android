@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
 import com.autowheel.bangbang.ui.index.IndexFragment
+import com.autowheel.bangbang.ui.index.PublishActivity
 import com.autowheel.bangbang.ui.msg.MsgFragment
 import com.autowheel.bangbang.ui.note.NoteFragment
+import com.autowheel.bangbang.ui.note.NotePublishActivity
 import com.autowheel.bangbang.ui.user.UserFragment
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -35,6 +38,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }*/
         initFragment()
         initBottomNavigationView()
+        layout_publish.setOnClickListener {
+            startActivity<PublishActivity>()
+        }
+        layout_publish_note.setOnClickListener {
+            startActivity<NotePublishActivity>()
+        }
     }
 
 
