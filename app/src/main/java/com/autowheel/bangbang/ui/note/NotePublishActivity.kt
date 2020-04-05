@@ -17,7 +17,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.FileProvider
 import com.autowheel.bangbang.R
-import com.autowheel.bangbang.base.BaseActivity
+import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.ui.note.handler.CodeEditHandler
 import com.autowheel.bangbang.ui.note.handler.StrikeThroughEditHandler
 import com.autowheel.bangbang.utils.FileUtil
@@ -37,7 +37,6 @@ import io.noties.markwon.editor.handler.EmphasisEditHandler
 import io.noties.markwon.editor.handler.StrongEmphasisEditHandler
 import kotlinx.android.synthetic.main.activity_note_publish.*
 import kotlinx.android.synthetic.main.layout_dialog_imgtype.view.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -50,16 +49,19 @@ import java.io.IOException
 /**
  * Created by Xily on 2020/4/5.
  */
-class NotePublishActivity : BaseActivity(), View.OnClickListener {
+class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
     private lateinit var markwon: Markwon
     private lateinit var dialog: Dialog
     private var imageUri: Uri? = null
+    override fun getToolbarTitle(): String {
+        return "发布笔记"
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_note_publish
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
-        initToolbar()
         initEditor()
         initUploadImageDialog()
         //startActivity<NoteDetailActivity>()
@@ -214,15 +216,6 @@ class NotePublishActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    override fun initToolbar() {
-        setSupportActionBar(toolbar)
-        toolbar_title.text = "发布笔记"
-        supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_note_publish_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -230,10 +223,6 @@ class NotePublishActivity : BaseActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> {
-                finish() // back button
-                return true
-            }
             R.id.action_preview -> {
                 startActivity<NotePreviewActivity>(
                     "title" to et_title.text(),

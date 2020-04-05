@@ -9,10 +9,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.MenuItem
 import androidx.core.content.FileProvider
 import com.autowheel.bangbang.R
-import com.autowheel.bangbang.base.BaseActivity
+import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.utils.FileUtil
 import com.autowheel.bangbang.utils.toastError
 import com.karumi.dexter.Dexter
@@ -22,7 +21,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_avatar.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,8 +32,12 @@ import java.io.IOException
 /**
  * Created by Xily on 2020/3/30.
  */
-class AvatarActivity : BaseActivity() {
+class AvatarActivity : BackBaseActivity() {
     private var imageUri: Uri? = null
+    override fun getToolbarTitle(): String {
+        return "修改头像"
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_avatar
     }
@@ -47,15 +49,6 @@ class AvatarActivity : BaseActivity() {
         }
         btn_album.setOnClickListener {
             album()
-        }
-    }
-
-    override fun initToolbar() {
-        setSupportActionBar(toolbar)
-        toolbar_title.text = "修改头像"
-        supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
         }
     }
 
@@ -202,13 +195,4 @@ class AvatarActivity : BaseActivity() {
         startActivityForResult(intent, 3)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish() // back button
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

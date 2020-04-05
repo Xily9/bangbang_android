@@ -4,21 +4,22 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import com.autowheel.bangbang.R
-import com.autowheel.bangbang.base.BaseActivity
+import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.utils.putExtras
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastSuccess
 import kotlinx.android.synthetic.main.activity_reg.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
-import kotlinx.android.synthetic.main.layout_toolbar.toolbar
 
 /**
  * Created by Xily on 2020/4/3.
  */
-class RegActivity : BaseActivity() {
+class RegActivity : BackBaseActivity() {
+    override fun getToolbarTitle(): String {
+        return "注册"
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_reg
     }
@@ -64,24 +65,5 @@ class RegActivity : BaseActivity() {
                 progressDialog.dismiss()
             })
         }
-    }
-
-    override fun initToolbar() {
-        setSupportActionBar(toolbar)
-        toolbar_title.text = "注册"
-        supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish() // back button
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

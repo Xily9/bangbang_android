@@ -6,6 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * Created by Xily on 2019/7/8.
@@ -37,5 +44,27 @@ abstract class BaseFragment : Fragment() {
 
     open fun initToolbar() {}
 
+    fun launch(
+        context: CoroutineContext = EmptyCoroutineContext,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        block: suspend CoroutineScope.() -> Unit
+    ) =
+        viewLifecycleOwner.lifecycleScope.launch(context, start, block)
 
+    fun launch(
+        tryBlock: suspend CoroutineScope.() -> Unit,
+        catchBlock: (suspend CoroutineScope.(Throwable) -> Unit) = {},
+        finallyBlock: (suspend CoroutineScope.() -> Unit) = {}
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                tryBlock()
+            } catch (e: CancellationException) {
+            } catch (e: Exception) {
+                catchBlock(e)
+            } finally {
+                finallyBlock()
+            }
+        }
+    }
 }

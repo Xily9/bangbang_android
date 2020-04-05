@@ -2,9 +2,11 @@ package com.autowheel.bangbang.model.network.service
 
 import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.LoginBean
+import com.autowheel.bangbang.model.network.bean.ProfileBean
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
@@ -39,4 +41,14 @@ interface ApiService {
         @Field("password") password: String,
         @Field("verify_code") verifyCode: String
     ): Call<GeneralResponseBean<Any>>
+
+    @GET("/user/profile")
+    suspend fun getProfile(): GeneralResponseBean<ProfileBean>
+
+    @POST("/user/profile")
+    @FormUrlEncoded
+    suspend fun editProfile(
+        @Field("nickname") nickname: String,
+        @Field("signature") signature: String
+    ): GeneralResponseBean<Any>
 }

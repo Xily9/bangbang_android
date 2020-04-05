@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseFragment
 import com.autowheel.bangbang.ui.MainActivity
+import com.autowheel.bangbang.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_msg.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
@@ -20,6 +21,7 @@ class MsgFragment : BaseFragment() {
         initRecyclerView()
         swipe_refresh_layout.setColorSchemeResources(R.color.blue)
         swipe_refresh_layout.setOnRefreshListener {
+            startActivity<ChatActivity>("id" to 1)
             loadData()
         }
         loadData()

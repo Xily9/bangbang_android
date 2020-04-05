@@ -1,25 +1,27 @@
 package com.autowheel.bangbang.ui.index
 
 import android.os.Bundle
-import android.view.MenuItem
 import com.autowheel.bangbang.R
-import com.autowheel.bangbang.base.BaseActivity
+import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.utils.gone
 import com.autowheel.bangbang.utils.visible
 import kotlinx.android.synthetic.main.activity_publish.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 
 /**
  * Created by Xily on 2020/4/5.
  */
-class PublishActivity : BaseActivity() {
+class PublishActivity : BackBaseActivity() {
     private var isCourse = true
+
+    override fun getToolbarTitle(): String {
+        return "发布辅导"
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_publish
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
-        initToolbar()
         rg_type.setOnCheckedChangeListener { group, checkedId ->
             isCourse = checkedId == R.id.rb_course
             initLayout()
@@ -38,22 +40,4 @@ class PublishActivity : BaseActivity() {
         }
     }
 
-    override fun initToolbar() {
-        setSupportActionBar(toolbar)
-        toolbar_title.text = "发布辅导"
-        supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish() // back button
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

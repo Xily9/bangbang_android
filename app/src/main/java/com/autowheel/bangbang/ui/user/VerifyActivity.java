@@ -1,7 +1,6 @@
 package com.autowheel.bangbang.ui.user;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -52,13 +51,17 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
                     .enqueue(new Callback<GeneralResponseBean<Object>>() {
                         @Override
                         public void onResponse(Call<GeneralResponseBean<Object>> call, Response<GeneralResponseBean<Object>> response) {
-                            GeneralResponseBean<Object> verifyResponseBean = response.body();
-                            if (verifyResponseBean.getCode() == 0) {
-                                ToastyUtilKt.toastSuccess("认证成功!");
-                                Intent intent = new Intent(VerifyActivity.this, RegActivity.class);
-                                startActivity(intent);
+                            if (response.isSuccessful()) {
+                                GeneralResponseBean<Object> verifyResponseBean = response.body();
+                                if (verifyResponseBean.getCode() == 0) {
+                                    ToastyUtilKt.toastSuccess("认证成功!");
+                                    setResult(RESULT_OK);
+                                    finish();
+                                } else {
+                                    ToastyUtilKt.toastError(verifyResponseBean.getMsg());
+                                }
                             } else {
-                                ToastyUtilKt.toastError(verifyResponseBean.getMsg());
+                                ToastyUtilKt.toastError("网络请求出错!");
                             }
                         }
 
