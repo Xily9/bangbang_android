@@ -15,7 +15,7 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/view1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -83,47 +83,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="16dp"
-        android:background="#BBB"
-        app:layout_constraintBottom_toTopOf="@id/iv_forward"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_forward"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:tint="#101010"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_forward" />
-
-    <ImageView
-        android:id="@+id/iv_favorite"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:tint="#101010"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_forward"
-        app:layout_constraintEnd_toStartOf="@+id/iv_forward"
-        app:layout_constraintTop_toTopOf="@+id/iv_forward"
-        app:srcCompat="@drawable/ic_favorite" />
-
-    <ImageView
-        android:id="@+id/iv_good"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:tint="#101010"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_favorite"
-        app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
-        app:layout_constraintTop_toTopOf="@+id/iv_favorite"
-        app:srcCompat="@drawable/ic_good" />
 </androidx.constraintlayout.widget.ConstraintLayout>

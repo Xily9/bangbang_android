@@ -13,7 +13,6 @@
         android:text="拍照"
         android:textSize="18sp"
         android:textColor="#000"
-        android:layout_marginTop="16dp"
         android:background="#fff" />
 
     <View

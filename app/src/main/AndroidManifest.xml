@@ -46,5 +46,6 @@
         <activity android:name=".ui.note.NoteDetailActivity" />
         <activity android:name=".ui.note.NotePublishActivity" />
         <activity android:name=".ui.index.PublishActivity" />
+        <activity android:name=".ui.note.NotePreviewActivity" />
     </application>
 </manifest>
