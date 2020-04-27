@@ -10,6 +10,7 @@ import android.provider.MediaStore
 
 object FileUtil {
     fun getPath(context: Context, uri: Uri): String? {
+        debug(uri.toString())
         if (DocumentsContract.isDocumentUri(context, uri)) {
             // DocumentProvider
             if ("com.android.externalstorage.documents" == uri.authority) {

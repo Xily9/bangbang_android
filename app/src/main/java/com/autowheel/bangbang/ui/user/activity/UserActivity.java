@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.user;
+package com.autowheel.bangbang.ui.user.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,10 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 
 import com.autowheel.bangbang.R;
 import com.autowheel.bangbang.base.BaseViewBindingActivity;
 import com.autowheel.bangbang.databinding.ActivityUserBinding;
+import com.autowheel.bangbang.model.network.bean.ProfileBean;
+import com.autowheel.bangbang.utils.UserUtil;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +31,16 @@ public class UserActivity extends BaseViewBindingActivity<ActivityUserBinding> {
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
         initToolbar();
+        initData();
+        initLiveEventBus();
+    }
+
+    private void initData() {
+        ProfileBean profileBean = UserUtil.INSTANCE.getProfile();
+        getViewBinding().tvNickname.setText(profileBean.getNickname());
+        getViewBinding().tvEmail.setText(profileBean.getEmail());
+        getViewBinding().tvSignature.setText(profileBean.getSignature());
+        getViewBinding().tvUsername.setText(profileBean.getUsername());
     }
 
     @Override
@@ -35,6 +49,16 @@ public class UserActivity extends BaseViewBindingActivity<ActivityUserBinding> {
         getViewBinding().toolbar.toolbarTitle.setText("查看资料");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initLiveEventBus() {
+        LiveEventBus.get("refresh", Boolean.class)
+                .observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        initData();
+                    }
+                });
     }
 
     @Override

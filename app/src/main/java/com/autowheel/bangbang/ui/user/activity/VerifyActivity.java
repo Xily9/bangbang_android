@@ -1,6 +1,7 @@
-package com.autowheel.bangbang.ui.user;
+package com.autowheel.bangbang.ui.user.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,7 +11,9 @@ import com.autowheel.bangbang.base.BaseViewBindingActivity;
 import com.autowheel.bangbang.databinding.ActivityVerifyBinding;
 import com.autowheel.bangbang.model.network.RetrofitHelper;
 import com.autowheel.bangbang.model.network.bean.GeneralResponseBean;
+import com.autowheel.bangbang.ui.MainActivity;
 import com.autowheel.bangbang.utils.ToastyUtilKt;
+import com.autowheel.bangbang.utils.UserUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,7 +58,9 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
                                 GeneralResponseBean<Object> verifyResponseBean = response.body();
                                 if (verifyResponseBean.getCode() == 0) {
                                     ToastyUtilKt.toastSuccess("认证成功!");
-                                    setResult(RESULT_OK);
+                                    UserUtil.INSTANCE.setVerify(true);
+                                    Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     ToastyUtilKt.toastError(verifyResponseBean.getMsg());
@@ -63,11 +68,13 @@ public class VerifyActivity extends BaseViewBindingActivity<ActivityVerifyBindin
                             } else {
                                 ToastyUtilKt.toastError("网络请求出错!");
                             }
+                            progressDialog.dismiss();
                         }
 
                         @Override
                         public void onFailure(Call<GeneralResponseBean<Object>> call, Throwable t) {
                             ToastyUtilKt.toastError("网络请求出错!");
+                            progressDialog.dismiss();
                         }
                     });
         }

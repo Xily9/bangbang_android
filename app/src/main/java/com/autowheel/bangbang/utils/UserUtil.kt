@@ -9,7 +9,13 @@ import com.autowheel.bangbang.model.DataManager
 object UserUtil {
     var avatarDrawable: Drawable? = null
     val isLogin
-        get() = DataManager.token.isNotEmpty()
+        get() = DataManager.token.isNotEmpty() && DataManager.verify
+    var isVerify = DataManager.verify
+        set(value) {
+            DataManager.verify = value
+            field = value
+        }
+    var avatarUpdateTime = System.currentTimeMillis().toString()
     var token = DataManager.token
         set(value) {
             DataManager.token = value

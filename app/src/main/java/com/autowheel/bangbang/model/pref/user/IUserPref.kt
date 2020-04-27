@@ -8,6 +8,7 @@ import com.autowheel.bangbang.model.network.bean.ProfileBean
  */
 interface IUserPref {
     var token: String
+    var verify: Boolean
     var profile: ProfileBean
     fun clearUserPref()
 }

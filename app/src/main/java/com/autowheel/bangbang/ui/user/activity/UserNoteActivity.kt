@@ -1,0 +1,60 @@
+package com.autowheel.bangbang.ui.user.activity
+
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.autowheel.bangbang.R
+import com.autowheel.bangbang.base.BackBaseActivity
+import com.autowheel.bangbang.model.network.RetrofitHelper
+import com.autowheel.bangbang.model.network.bean.UserNoteBean
+import com.autowheel.bangbang.ui.user.adapter.UserNoteAdapter
+import com.autowheel.bangbang.utils.toastError
+import kotlinx.android.synthetic.main.activity_user_note.*
+
+/**
+ * Created by Xily on 2020/4/26.
+ */
+class UserNoteActivity : BackBaseActivity() {
+    private lateinit var adapter: UserNoteAdapter
+    private val list = arrayListOf<UserNoteBean>()
+    override fun getToolbarTitle(): String {
+        return "我发布的笔记"
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_user_note
+    }
+
+    override fun initViews(savedInstanceState: Bundle?) {
+        swipe_refresh_layout.setColorSchemeColors(resources.getColor(R.color.blue))
+        swipe_refresh_layout.setOnRefreshListener {
+            loadData()
+        }
+        initRecyclerView()
+        loadData()
+    }
+
+    private fun initRecyclerView() {
+        rv_note.layoutManager = LinearLayoutManager(this)
+        adapter = UserNoteAdapter(list)
+        rv_note.adapter = adapter
+    }
+
+    private fun loadData() {
+        swipe_refresh_layout.isRefreshing = true
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getUserNote()
+            if (result.code == 0) {
+                list.clear()
+                list.addAll(result.data)
+                adapter.notifyDataSetChanged()
+            } else {
+                toastError("加载失败")
+            }
+        }, catchBlock = {
+            toastError("加载失败")
+        }, finallyBlock = {
+            swipe_refresh_layout.isRefreshing = false
+        })
+    }
+
+}

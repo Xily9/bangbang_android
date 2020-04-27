@@ -35,18 +35,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.user.LoginActivity" />
-        <activity android:name=".ui.user.RegActivity" />
-        <activity android:name=".ui.user.VerifyActivity" />
+        <activity android:name=".ui.user.activity.LoginActivity" />
+        <activity android:name=".ui.user.activity.RegActivity" />
+        <activity android:name=".ui.user.activity.VerifyActivity" />
         <activity android:name=".ui.index.SearchActivity" />
-        <activity android:name=".ui.user.SettingsActivity" />
-        <activity android:name=".ui.user.AvatarActivity" />
-        <activity android:name=".ui.user.UserActivity" />
-        <activity android:name=".ui.user.UserEditActivity" />
+        <activity android:name=".ui.user.activity.SettingsActivity" />
+        <activity android:name=".ui.user.activity.AvatarActivity" />
+        <activity android:name=".ui.user.activity.UserActivity" />
+        <activity android:name=".ui.user.activity.UserEditActivity" />
         <activity android:name=".ui.note.NoteDetailActivity" />
         <activity android:name=".ui.note.NotePublishActivity" />
         <activity android:name=".ui.index.PublishActivity" />
         <activity android:name=".ui.note.NotePreviewActivity" />
         <activity android:name=".ui.msg.ChatActivity" />
+        <activity android:name=".ui.user.activity.UserStudyActivity" />
+        <activity android:name=".ui.user.activity.ForgetPasswordActivity" />
+        <activity android:name=".ui.user.activity.UserNoteActivity" />
+        <activity android:name=".ui.user.activity.ChangePasswordActivity" />
+        <activity android:name=".ui.user.activity.ChangeEmailActivity" />
+        <activity android:name=".ui.user.activity.SafeCenterActivity" />
     </application>
 </manifest>

@@ -1,6 +1,7 @@
 package com.autowheel.bangbang.ui.note
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import io.noties.markwon.Markwon
@@ -27,5 +28,6 @@ class NoteDetailActivity : BackBaseActivity() {
             .usePlugin(GlideImagesPlugin.create(this))
             .build()
         markwon.setMarkdown(tv_content, "")
+        tv_content.movementMethod = LinkMovementMethod.getInstance()
     }
 }

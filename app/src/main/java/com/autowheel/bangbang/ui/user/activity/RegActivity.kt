@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.user
+package com.autowheel.bangbang.ui.user.activity
 
 import android.app.Activity
 import android.app.ProgressDialog

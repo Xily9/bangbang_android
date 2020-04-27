@@ -8,7 +8,7 @@ import co.lujun.androidtagview.TagView
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
 import com.autowheel.bangbang.model.DataManager
-import com.autowheel.bangbang.ui.user.UserActivity
+import com.autowheel.bangbang.ui.user.activity.UserActivity
 import com.autowheel.bangbang.utils.*
 import kotlinx.android.synthetic.main.activity_search.*
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/et_signature"
+        android:id="@+id/tv_signature"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -47,7 +47,7 @@
         android:textColor="#66000000"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/et_username" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
     <TextView
         android:id="@+id/textView7"
@@ -58,7 +58,7 @@
         android:textColor="#66000000"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
     <TextView
         android:id="@+id/textView8"
@@ -69,10 +69,10 @@
         android:textColor="#66000000"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/et_nickname" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
 
     <TextView
-        android:id="@+id/et_username"
+        android:id="@+id/tv_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -85,7 +85,7 @@
         tools:text="测试测试" />
 
     <TextView
-        android:id="@+id/et_email"
+        android:id="@+id/tv_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -98,7 +98,7 @@
         tools:text="aaaaa@aaa.com" />
 
     <TextView
-        android:id="@+id/et_nickname"
+        android:id="@+id/tv_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

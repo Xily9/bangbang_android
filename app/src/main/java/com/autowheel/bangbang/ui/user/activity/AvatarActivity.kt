@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.user
+package com.autowheel.bangbang.ui.user.activity
 
 import android.Manifest
 import android.app.ProgressDialog
@@ -10,10 +10,17 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
+import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
+import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.utils.FileUtil
+import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.toastError
+import com.autowheel.bangbang.utils.toastSuccess
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -44,12 +51,19 @@ class AvatarActivity : BackBaseActivity() {
 
     override fun initViews(savedInstanceState: Bundle?) {
         initToolbar()
+        initData()
         btn_photo.setOnClickListener {
             camera()
         }
         btn_album.setOnClickListener {
             album()
         }
+    }
+
+    private fun initData() {
+        Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
+            .signature(ObjectKey(UserUtil.avatarUpdateTime))
+            .error(R.mipmap.ic_launcher_round).into(iv_avatar)
     }
 
     private fun camera() {
@@ -160,6 +174,21 @@ class AvatarActivity : BackBaseActivity() {
         proDialog.isIndeterminate = false
         proDialog.setCancelable(false)
         proDialog.show()
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().uploadAvatar(body)
+            if (result.code == 0) {
+                toastSuccess("上传成功")
+                UserUtil.avatarUpdateTime = System.currentTimeMillis().toString()
+                initData()
+                LiveEventBus.get("refresh", Boolean::class.java).post(true)
+            } else {
+                toastError("上传失败")
+            }
+        }, catchBlock = {
+            toastError("上传失败")
+        }, finallyBlock = {
+            proDialog.dismiss()
+        })
     }
 
     private fun photoClip(uri: Uri) {

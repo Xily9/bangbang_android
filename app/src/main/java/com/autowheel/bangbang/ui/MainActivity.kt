@@ -11,7 +11,9 @@ import com.autowheel.bangbang.ui.index.PublishActivity
 import com.autowheel.bangbang.ui.msg.MsgFragment
 import com.autowheel.bangbang.ui.note.NoteFragment
 import com.autowheel.bangbang.ui.note.NotePublishActivity
-import com.autowheel.bangbang.ui.user.UserFragment
+import com.autowheel.bangbang.ui.user.activity.LoginActivity
+import com.autowheel.bangbang.ui.user.fragment.UserFragment
+import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,11 +33,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
-        /*if (DataManager.token.isEmpty()) {
+        if (!UserUtil.isLogin) {
             startActivity<LoginActivity>()
             finish()
             return
-        }*/
+        }
         initFragment()
         initBottomNavigationView()
         layout_publish.setOnClickListener {
