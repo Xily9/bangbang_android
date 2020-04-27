@@ -9,40 +9,47 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20sp"
+        android:layout_marginStart="10dp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="高数应该这样" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:text="相信大家一定很头疼......" />
 
     <TextView
         android:id="@+id/tv_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_content"
+        tools:text="作者：张三" />
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/img_photo"
-        app:layout_constraintTop_toTopOf="@+id/tv_good_number" />
+        app:layout_constraintTop_toTopOf="@+id/tv_good_number"
+        tools:text="2020-04-26" />
 
     <ImageView
         android:id="@+id/img_photo"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="84sp"
+        android:layout_height="84sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,9 +57,9 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_width="17sp"
+        android:layout_height="17sp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_author"
         app:srcCompat="@drawable/ic_good" />
@@ -61,8 +68,8 @@
         android:id="@+id/tv_good_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="7dp"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+        app:layout_constraintTop_toTopOf="@+id/imageView6"
+        tools:text="200" />
 </androidx.constraintlayout.widget.ConstraintLayout>

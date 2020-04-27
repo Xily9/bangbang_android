@@ -10,32 +10,36 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="高数应该这样学" />
 
     <TextView
         android:id="@+id/tv_date"
-        android:layout_width="64dp"
-        android:layout_height="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_content" />
+        app:layout_constraintTop_toTopOf="@+id/tv_content"
+        tools:text="2020-04-26" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:text="高数jjoiajoflakmgim" />
 
     <Button
         android:id="@+id/btn_apply"
         android:layout_width="60sp"
         android:layout_height="30sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="23dp"
         android:background="@drawable/bg_btn_border"
         android:text="申请综测"
         android:textSize="12sp"
@@ -57,7 +61,7 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_content"
         app:layout_constraintTop_toTopOf="@+id/btn_apply"
         app:srcCompat="@drawable/ic_good" />
 
@@ -67,5 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/btn_apply" />
+        app:layout_constraintTop_toTopOf="@+id/btn_apply"
+        tools:text="200" />
 </androidx.constraintlayout.widget.ConstraintLayout>
