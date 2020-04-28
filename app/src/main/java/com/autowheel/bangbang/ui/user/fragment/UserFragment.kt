@@ -111,7 +111,7 @@ class UserFragment : BaseFragment() {
     override fun initToolbar() {
         toolbar_title.text = "我的"
         iv_settings.setOnClickListener {
-            startActivity<SafeCenterActivity>()
+            startActivity<SettingsActivity>()
         }
     }
 

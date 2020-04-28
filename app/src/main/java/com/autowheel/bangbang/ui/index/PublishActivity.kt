@@ -1,9 +1,14 @@
 package com.autowheel.bangbang.ui.index
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
+import com.autowheel.bangbang.model.network.RetrofitHelper
+import com.autowheel.bangbang.model.network.bean.GradeBean
 import com.autowheel.bangbang.utils.gone
+import com.autowheel.bangbang.utils.startActivity
+import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.visible
 import kotlinx.android.synthetic.main.activity_publish.*
 
@@ -12,7 +17,8 @@ import kotlinx.android.synthetic.main.activity_publish.*
  */
 class PublishActivity : BackBaseActivity() {
     private var isCourse = true
-
+    private var list = arrayListOf<GradeBean>()
+    private var fileId = 0
     override fun getToolbarTitle(): String {
         return "发布辅导"
     }
@@ -26,8 +32,84 @@ class PublishActivity : BackBaseActivity() {
             isCourse = checkedId == R.id.rb_course
             initLayout()
         }
+        btn_pubish.setOnClickListener {
+            publish()
+        }
         initLayout()
-        spinner.attachDataSource<String>(listOf("高级语言程序设计", "汇编语言程序设计", "Java程序设计"))
+        loadGrade()
+    }
+
+    private fun loadGrade() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("正在加载中,请稍候..")
+        progressDialog.show()
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getGrade()
+            if (result.code == 0) {
+                list.clear()
+                list.addAll(result.data.filter {
+                    (it.point.toDoubleOrNull() ?: 0.0) >= 90 || it.point == "优秀"
+                })
+                spinner.attachDataSource<String>(list.map { it.name })
+            } else {
+                toastError("加载失败")
+            }
+        }, catchBlock = {
+            toastError("加载失败")
+        }, finallyBlock = {
+            progressDialog.dismiss()
+        })
+    }
+
+    private fun publish() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("提交中,请稍候..")
+        progressDialog.show()
+        launch(tryBlock = {
+            val result = if (isCourse) {
+                val gradeBean = list[spinner.selectedIndex]
+                RetrofitHelper.getApiService().publishCoach(
+                    "course",
+                    gradeBean.name,
+                    gradeBean.point,
+                    gradeBean.token,
+                    "",
+                    "",
+                    et_declaration.text.toString(),
+                    "0"
+                )
+            } else {
+                val name = et_skill_name.text.toString()
+                if (name.isEmpty()) {
+                    toastError("技能名字必填")
+                    return@launch
+                } else if (fileId == 0) {
+                    toastError("必须上传证明文件")
+                    return@launch
+                } else {
+                    RetrofitHelper.getApiService().publishCoach(
+                        "skill",
+                        "",
+                        "",
+                        "",
+                        name,
+                        fileId.toString(),
+                        et_declaration.text.toString(),
+                        "0"
+                    )
+                }
+            }
+            if (result.code == 0) {
+                startActivity<DetailActivity>("id" to result.data.id)
+                finish()
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+            progressDialog.dismiss()
+        })
     }
 
     private fun initLayout() {

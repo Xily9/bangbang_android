@@ -1,9 +1,6 @@
 package com.autowheel.bangbang.model.network.service
 
-import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
-import com.autowheel.bangbang.model.network.bean.GradeBean
-import com.autowheel.bangbang.model.network.bean.ProfileBean
-import com.autowheel.bangbang.model.network.bean.UserNoteBean
+import com.autowheel.bangbang.model.network.bean.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -51,6 +48,9 @@ interface ApiService {
     @GET("/user/profile")
     fun getProfile(): Call<GeneralResponseBean<ProfileBean>>
 
+    @GET("/user/profile/{uid}")
+    suspend fun getProfile(@Path("uid") uid: Int): GeneralResponseBean<ProfileBean>
+
     @POST("/user/profile")
     @FormUrlEncoded
     fun editProfile(
@@ -67,4 +67,20 @@ interface ApiService {
 
     @GET("/note/published")
     suspend fun getUserNote(): GeneralResponseBean<List<UserNoteBean>>
+
+    @POST("/coach")
+    @FormUrlEncoded
+    suspend fun publishCoach(
+        @Field("type") type: String,
+        @Field("course") course: String,
+        @Field("grade") grade: String,
+        @Field("course_token") courseToken: String,
+        @Field("skill_name") skillName: String,
+        @Field("file_id") fileId: String,
+        @Field("declaration") declaration: String,
+        @Field("price") price: String
+    ): GeneralResponseBean<CoachPublishBean>
+
+    @GET("/coach/{id}")
+    suspend fun getCoachDetail(@Path("id") id: Int): GeneralResponseBean<CoachBean>
 }

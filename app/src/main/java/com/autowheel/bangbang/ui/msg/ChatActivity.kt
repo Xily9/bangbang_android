@@ -10,18 +10,19 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
+import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.MessageBean
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.gone
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.signature.ObjectKey
 import com.google.gson.Gson
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.vanniktech.emoji.EmojiPopup
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 
 /**
  * Created by Xily on 2020/4/5.
@@ -53,7 +54,7 @@ class ChatActivity : BackBaseActivity() {
         }
         if (id >= 0) {
             getNickName()
-            getFace()
+            getAvatar()
             getItem()
             loadData()
             layout_send.setOnClickListener {
@@ -102,16 +103,22 @@ class ChatActivity : BackBaseActivity() {
 
     private fun getNickName() {
         if (id > 0)
+            launch(tryBlock = {
+                val result = RetrofitHelper.getApiService().getProfile(id)
+                if (result.code == 0) {
+                    val data = result.data
+                    toolbar_title.text = data.nickname
+                }
+            })
         else
-            title = "系统消息"
+            toolbar_title.text = "系统消息"
     }
 
-    private fun getFace() {
+    private fun getAvatar() {
         if (id > 0) {
-            val options = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-            Glide.with(this).load("${BASE_URL}/user/avatar/$id").apply(options)
-                .into(object : CustomTarget<Drawable>() {
+            Glide.with(this).load("$BASE_URL/user/avatar/${id}")
+                .signature(ObjectKey(UserUtil.avatarUpdateTime))
+                .error(R.mipmap.ic_launcher_round).into(object : CustomTarget<Drawable>() {
                     override fun onLoadCleared(placeholder: Drawable?) {
                     }
 
@@ -122,29 +129,22 @@ class ChatActivity : BackBaseActivity() {
                         adapter.leftDrawable = resource
                         adapter.notifyDataSetChanged()
                     }
-
                 })
         }
-        if (UserUtil.avatarDrawable == null) {
-            Glide.with(this)
-                .load("${BASE_URL}user/avatar/${UserUtil.profile.uid}?t=${System.currentTimeMillis()}")
-                .into(object : CustomTarget<Drawable>() {
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
+        Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
+            .signature(ObjectKey(UserUtil.avatarUpdateTime))
+            .into(object : CustomTarget<Drawable>() {
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
 
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        UserUtil.avatarDrawable = resource
-                        adapter.rightDrawable = resource
-                        adapter.notifyDataSetChanged()
-                    }
-                })
-        } else {
-            adapter.rightDrawable = UserUtil.avatarDrawable
-            adapter.notifyDataSetChanged()
-        }
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    adapter.rightDrawable = resource
+                    adapter.notifyDataSetChanged()
+                }
+            })
     }
 
     private fun initRecycleView() {

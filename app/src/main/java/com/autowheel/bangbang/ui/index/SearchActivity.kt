@@ -112,9 +112,7 @@ class SearchActivity : BaseActivity() {
                 hideSoftInput()
                 et_search.clearFocus()
                 if (text.isInt()) {
-                    val bundle = Bundle()
-                    bundle.putInt("id", text.toInt())
-                    //startActivity<InfoActivity>(bundle)
+                    startActivity<DetailActivity>("id" to text.toInt())
                     finish()
                 } else {
                     if (text.startsWith("UID:", true)) {

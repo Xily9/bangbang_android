@@ -1,13 +1,11 @@
 package com.autowheel.bangbang.utils
 
-import android.graphics.drawable.Drawable
 import com.autowheel.bangbang.model.DataManager
 
 /**
  * Created by Xily on 2020/4/6.
  */
 object UserUtil {
-    var avatarDrawable: Drawable? = null
     val isLogin
         get() = DataManager.token.isNotEmpty() && DataManager.verify
     var isVerify = DataManager.verify

@@ -54,5 +54,6 @@
         <activity android:name=".ui.user.activity.ChangePasswordActivity" />
         <activity android:name=".ui.user.activity.ChangeEmailActivity" />
         <activity android:name=".ui.user.activity.SafeCenterActivity" />
+        <activity android:name=".ui.index.DetailActivity" />
     </application>
 </manifest>
