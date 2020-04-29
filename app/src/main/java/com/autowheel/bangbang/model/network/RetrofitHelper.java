@@ -61,7 +61,10 @@ public class RetrofitHelper {
                             })
                             .addNetworkInterceptor(new DoraemonWeakNetworkInterceptor())
                             .addInterceptor(new DoraemonInterceptor())
+                            .connectTimeout(0, TimeUnit.SECONDS)
                             .callTimeout(0, TimeUnit.SECONDS)
+                            .readTimeout(0, TimeUnit.SECONDS)
+                            .writeTimeout(0, TimeUnit.SECONDS)
                             .build();
 
                     apiService = new Retrofit.Builder()
