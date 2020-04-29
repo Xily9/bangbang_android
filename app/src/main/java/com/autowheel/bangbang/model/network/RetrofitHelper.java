@@ -9,6 +9,7 @@ import com.didichuxing.doraemonkit.kit.network.okhttp.DoraemonWeakNetworkInterce
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -60,6 +61,7 @@ public class RetrofitHelper {
                             })
                             .addNetworkInterceptor(new DoraemonWeakNetworkInterceptor())
                             .addInterceptor(new DoraemonInterceptor())
+                            .callTimeout(0, TimeUnit.SECONDS)
                             .build();
 
                     apiService = new Retrofit.Builder()

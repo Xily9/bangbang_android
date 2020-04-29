@@ -38,14 +38,14 @@
         <activity android:name=".ui.user.activity.LoginActivity" />
         <activity android:name=".ui.user.activity.RegActivity" />
         <activity android:name=".ui.user.activity.VerifyActivity" />
-        <activity android:name=".ui.index.SearchActivity" />
+        <activity android:name=".ui.index.activity.SearchActivity" />
         <activity android:name=".ui.user.activity.SettingsActivity" />
         <activity android:name=".ui.user.activity.AvatarActivity" />
         <activity android:name=".ui.user.activity.UserActivity" />
         <activity android:name=".ui.user.activity.UserEditActivity" />
         <activity android:name=".ui.note.NoteDetailActivity" />
         <activity android:name=".ui.note.NotePublishActivity" />
-        <activity android:name=".ui.index.PublishActivity" />
+        <activity android:name=".ui.index.activity.PublishActivity" />
         <activity android:name=".ui.note.NotePreviewActivity" />
         <activity android:name=".ui.msg.ChatActivity" />
         <activity android:name=".ui.user.activity.UserStudyActivity" />
@@ -54,6 +54,6 @@
         <activity android:name=".ui.user.activity.ChangePasswordActivity" />
         <activity android:name=".ui.user.activity.ChangeEmailActivity" />
         <activity android:name=".ui.user.activity.SafeCenterActivity" />
-        <activity android:name=".ui.index.DetailActivity" />
+        <activity android:name=".ui.index.activity.DetailActivity" />
     </application>
 </manifest>

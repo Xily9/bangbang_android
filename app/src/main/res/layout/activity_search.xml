@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#00ffffff"
-                    android:hint="搜索辅导、用户"
+                    android:hint="搜索"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textColor="@color/light_grey_3"
@@ -85,7 +85,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/empty"
+            android:id="@+id/layout_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -107,7 +107,7 @@
                     android:textSize="17sp" />
 
                 <LinearLayout
-                    android:id="@+id/clear"
+                    android:id="@+id/layout_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -147,13 +147,13 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_coach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/progressBar"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="center"

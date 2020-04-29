@@ -6,31 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
-        android:id="@+id/include3"
         layout="@layout/layout_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/iv_avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/et_evaluation"
-        app:layout_constraintTop_toBottomOf="@+id/include3"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:srcCompat="@drawable/dk_performance_large_picture" />
 
     <TextView
         android:id="@+id/tv_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="24dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/img_photo"
-        app:layout_constraintStart_toEndOf="@+id/img_photo"
-        app:layout_constraintTop_toTopOf="@+id/img_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@+id/iv_avatar"
         tools:text="李子维|体育|绩点4.0" />
 
     <EditText
@@ -40,10 +39,9 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_fragment_user_logout"
         android:ems="10"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
 
     <Button
         android:id="@+id/btn_evaluate"

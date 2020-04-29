@@ -6,8 +6,8 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
-import com.autowheel.bangbang.ui.index.IndexFragment
-import com.autowheel.bangbang.ui.index.PublishActivity
+import com.autowheel.bangbang.ui.index.activity.PublishActivity
+import com.autowheel.bangbang.ui.index.fragment.IndexFragment
 import com.autowheel.bangbang.ui.msg.MsgFragment
 import com.autowheel.bangbang.ui.note.NoteFragment
 import com.autowheel.bangbang.ui.note.NotePublishActivity
@@ -66,7 +66,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun initFragment() {
-        val indexFragment = IndexFragment()
+        val indexFragment =
+            IndexFragment()
         val noteFragment = NoteFragment()
         val msgFragment = MsgFragment()
         val userFragment = UserFragment()

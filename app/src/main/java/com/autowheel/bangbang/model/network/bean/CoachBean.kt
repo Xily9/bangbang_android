@@ -3,6 +3,7 @@ package com.autowheel.bangbang.model.network.bean
 data class CoachBean(
     var course_score: String,
     var declaration: String,
+    var help_id: Int,
     var name: String,
     var price: Double, // 1.1
     var publisher_id: Int, // 1

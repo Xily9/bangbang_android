@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.index
+package com.autowheel.bangbang.ui.index.activity
 
 import android.os.Bundle
 import com.autowheel.bangbang.BASE_URL

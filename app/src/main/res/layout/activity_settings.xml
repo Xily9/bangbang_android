@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:text="帮忙推广"
+            android:textColor="#333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,13 +34,13 @@
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:tint="#919191"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:tint="#919191"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:text="手机账号安全中心"
+            android:textColor="#333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,13 +66,13 @@
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:tint="#919191"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:tint="#919191"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:text="帮助与反馈"
+            android:textColor="#333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,13 +98,13 @@
 
         <ImageView
             android:id="@+id/imageView12"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:tint="#919191"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:tint="#919191"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:text="给我们好评"
+            android:textColor="#333"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -126,9 +130,9 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
             android:tint="#919191"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

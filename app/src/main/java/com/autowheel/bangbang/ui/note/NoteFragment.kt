@@ -3,7 +3,7 @@ package com.autowheel.bangbang.ui.note
 import android.os.Bundle
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseFragment
-import com.autowheel.bangbang.ui.index.SearchActivity
+import com.autowheel.bangbang.ui.index.activity.SearchActivity
 import com.autowheel.bangbang.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_note.*
 

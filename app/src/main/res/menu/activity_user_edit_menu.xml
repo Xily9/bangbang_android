@@ -5,6 +5,6 @@
         android:id="@+id/action_finish"
         android:icon="@drawable/ic_baseline_check_24"
         android:title="完成"
-        app:iconTint="#000000"
+        app:iconTint="@color/light_grey_3"
         app:showAsAction="always" />
 </menu>

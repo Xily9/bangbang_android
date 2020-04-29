@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.index
+package com.autowheel.bangbang.ui.index.activity
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -6,10 +6,7 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.GradeBean
-import com.autowheel.bangbang.utils.gone
-import com.autowheel.bangbang.utils.startActivity
-import com.autowheel.bangbang.utils.toastError
-import com.autowheel.bangbang.utils.visible
+import com.autowheel.bangbang.utils.*
 import kotlinx.android.synthetic.main.activity_publish.*
 
 /**
@@ -100,6 +97,7 @@ class PublishActivity : BackBaseActivity() {
                 }
             }
             if (result.code == 0) {
+                toastSuccess("发布成功!")
                 startActivity<DetailActivity>("id" to result.data.id)
                 finish()
             } else {

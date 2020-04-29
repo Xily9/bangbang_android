@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 
 import com.autowheel.bangbang.R;
 import com.autowheel.bangbang.base.BaseViewBindingActivity;
@@ -53,12 +52,7 @@ public class UserActivity extends BaseViewBindingActivity<ActivityUserBinding> {
 
     private void initLiveEventBus() {
         LiveEventBus.get("refresh", Boolean.class)
-                .observe(this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        initData();
-                    }
-                });
+                .observe(this, aBoolean -> initData());
     }
 
     @Override

@@ -83,4 +83,7 @@ interface ApiService {
 
     @GET("/coach/{id}")
     suspend fun getCoachDetail(@Path("id") id: Int): GeneralResponseBean<CoachBean>
+
+    @GET("/coach/search")
+    suspend fun searchCoach(@Query("word") word: String): GeneralResponseBean<List<CoachBean>>
 }
