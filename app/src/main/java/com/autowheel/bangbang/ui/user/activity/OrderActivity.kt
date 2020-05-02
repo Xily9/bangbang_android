@@ -5,24 +5,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
-import com.autowheel.bangbang.model.network.bean.UserNoteBean
-import com.autowheel.bangbang.ui.user.adapter.UserNoteAdapter
+import com.autowheel.bangbang.model.network.bean.CoachBookListBean
+import com.autowheel.bangbang.ui.user.adapter.OrderAdapter
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
-import kotlinx.android.synthetic.main.activity_user_note.*
+import kotlinx.android.synthetic.main.activity_order.*
 
 /**
- * Created by Xily on 2020/4/26.
+ * Created by Xily on 2020/5/2.
  */
-class UserNoteActivity : BackBaseActivity() {
-    private lateinit var adapter: UserNoteAdapter
-    private val list = arrayListOf<UserNoteBean>()
+class OrderActivity : BackBaseActivity() {
+    private lateinit var adapter: OrderAdapter
+    private var list = arrayListOf<CoachBookListBean>()
     override fun getToolbarTitle(): String {
-        return "我发布的笔记"
+        return "预约列表"
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_user_note
+        return R.layout.activity_order
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -35,15 +35,18 @@ class UserNoteActivity : BackBaseActivity() {
     }
 
     private fun initRecyclerView() {
-        rv_note.layoutManager = LinearLayoutManager(this)
-        adapter = UserNoteAdapter(list)
-        rv_note.adapter = adapter
+        rv_order.layoutManager = LinearLayoutManager(this)
+        adapter = OrderAdapter(list)
+        adapter.listener = {
+            agreeOrder(list[it].help_id, list[it].book_userlist[list[it].selectIndex].uid)
+        }
+        rv_order.adapter = adapter
     }
 
     private fun loadData() {
         swipe_refresh_layout.isRefreshing = true
         launch(tryBlock = {
-            val result = RetrofitHelper.getApiService().getUserNote()
+            val result = RetrofitHelper.getApiService().getCoachBookList()
             if (result.code == 0) {
                 list.clear()
                 list.addAll(result.data)
@@ -61,4 +64,7 @@ class UserNoteActivity : BackBaseActivity() {
         })
     }
 
+    private fun agreeOrder(id: Int, uid: Int) {
+
+    }
 }

@@ -86,4 +86,17 @@ interface ApiService {
 
     @GET("/coach/search")
     suspend fun searchCoach(@Query("word") word: String): GeneralResponseBean<List<CoachBean>>
+
+    @POST("/coach/{id}")
+    suspend fun bookCoach(@Path("id") id: Int): GeneralResponseBean<Any>
+
+    @GET("/coach/booklist")
+    suspend fun getCoachBookList(): GeneralResponseBean<List<CoachBookListBean>>
+
+    @GET("/coach/record")
+    suspend fun getCoachHistory(): GeneralResponseBean<List<CoachBean>>
+
+    @GET("/coach/released")
+    suspend fun getReleasedCoach(): GeneralResponseBean<List<CoachBean>>
+
 }

@@ -55,5 +55,7 @@
         <activity android:name=".ui.user.activity.ChangeEmailActivity" />
         <activity android:name=".ui.user.activity.SafeCenterActivity" />
         <activity android:name=".ui.index.activity.DetailActivity" />
+        <activity android:name=".ui.user.activity.UserCoachActivity" />
+        <activity android:name=".ui.user.activity.UserCoachRecordActivity" />
     </application>
 </manifest>

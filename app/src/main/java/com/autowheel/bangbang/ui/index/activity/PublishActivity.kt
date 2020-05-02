@@ -28,12 +28,13 @@ class PublishActivity : BackBaseActivity() {
         rg_type.setOnCheckedChangeListener { group, checkedId ->
             isCourse = checkedId == R.id.rb_course
             initLayout()
+            if (isCourse && list.isEmpty()) {
+                loadGrade()
+            }
         }
         btn_pubish.setOnClickListener {
             publish()
         }
-        initLayout()
-        loadGrade()
     }
 
     private fun loadGrade() {
@@ -64,17 +65,22 @@ class PublishActivity : BackBaseActivity() {
         progressDialog.show()
         launch(tryBlock = {
             val result = if (isCourse) {
-                val gradeBean = list[spinner.selectedIndex]
-                RetrofitHelper.getApiService().publishCoach(
-                    "course",
-                    gradeBean.name,
-                    gradeBean.point,
-                    gradeBean.token,
-                    "",
-                    "",
-                    et_declaration.text.toString(),
-                    "0"
-                )
+                if (list.isEmpty()) {
+                    toastError("课程加载不成功或没有可辅导课程，请重新进入后再试")
+                    return@launch
+                } else {
+                    val gradeBean = list[spinner.selectedIndex]
+                    RetrofitHelper.getApiService().publishCoach(
+                        "course",
+                        gradeBean.name,
+                        gradeBean.point,
+                        gradeBean.token,
+                        "",
+                        "",
+                        et_declaration.text.toString(),
+                        "0"
+                    )
+                }
             } else {
                 val name = et_skill_name.text.toString()
                 if (name.isEmpty()) {
@@ -104,6 +110,7 @@ class PublishActivity : BackBaseActivity() {
                 toastError(result.msg)
             }
         }, catchBlock = {
+            it.printStackTrace()
             toastError("网络请求出错!")
         }, finallyBlock = {
             progressDialog.dismiss()

@@ -40,6 +40,7 @@ class UserStudyActivity : BackBaseActivity() {
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("正在加载中,请稍候..")
         progressDialog.show()
+        var a = 1
         launch(tryBlock = {
             val result = RetrofitHelper.getApiService().getGrade()
             if (result.code == 0) {

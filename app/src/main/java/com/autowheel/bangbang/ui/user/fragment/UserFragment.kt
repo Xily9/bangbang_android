@@ -49,6 +49,12 @@ class UserFragment : BaseFragment() {
         layout_note.setOnClickListener {
             startActivity<UserNoteActivity>()
         }
+        layout_coach.setOnClickListener {
+            startActivity<UserCoachActivity>()
+        }
+        layout_coach_record.setOnClickListener {
+            startActivity<UserCoachRecordActivity>()
+        }
     }
 
     private fun getProfile() {
