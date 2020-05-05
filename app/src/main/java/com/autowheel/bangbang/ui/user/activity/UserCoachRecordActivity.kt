@@ -6,9 +6,12 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.CoachBean
+import com.autowheel.bangbang.ui.index.activity.EvaluateActivity
 import com.autowheel.bangbang.ui.user.adapter.UserCoachRecordAdapter
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
+import com.autowheel.bangbang.utils.toastSuccess
 import kotlinx.android.synthetic.main.activity_user_coach_record.*
 
 /**
@@ -37,6 +40,24 @@ class UserCoachRecordActivity : BackBaseActivity() {
     private fun initRecyclerView() {
         rv_coach_record.layoutManager = LinearLayoutManager(this)
         adapter = UserCoachRecordAdapter(list)
+        adapter.btn1Listener = {
+            if (list[it].is_pay) {
+                //再次预约
+                bookAgain(list[it].help_id)
+            } else {
+                //取消预约
+                cancelBook(it, list[it].help_id)
+            }
+        }
+        adapter.btn2Listener = {
+            if (list[it].is_pay) {
+                //评价
+                startActivity<EvaluateActivity>("id" to list[it].help_id)
+            } else {
+                //立刻付款
+                pay(it, list[it].order_id)
+            }
+        }
         rv_coach_record.adapter = adapter
     }
 
@@ -58,6 +79,58 @@ class UserCoachRecordActivity : BackBaseActivity() {
             toastError("加载失败")
         }, finallyBlock = {
             swipe_refresh_layout.isRefreshing = false
+        })
+    }
+
+    private fun bookAgain(id: Int) {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().bookCoachAgain(id)
+            if (result.code == 0) {
+                toastSuccess("再次预约成功,请等待辅导人确认")
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+
+        })
+    }
+
+    private fun cancelBook(position: Int, id: Int) {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().cancelCoach(id)
+            if (result.code == 0) {
+                toastSuccess("取消预约成功")
+                list.removeAt(position)
+                adapter.notifyDataSetChanged()
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+
+        })
+    }
+
+    private fun pay(position: Int, orderId: Int) {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().payCoach(orderId)
+            if (result.code == 0) {
+                toastSuccess("付款成功")
+                list[position].is_pay = true
+                adapter.notifyItemChanged(position)
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+
         })
     }
 }

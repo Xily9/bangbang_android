@@ -13,7 +13,7 @@
         android:textColor="#333"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_time"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/layout_delete"
         app:layout_constraintTop_toTopOf="@+id/tv_time"
         app:layout_constraintVertical_bias="0.0"
         tools:text="待付款" />
@@ -30,13 +30,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020-5-1" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_avatar"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_time"
         app:layout_constraintTop_toBottomOf="@+id/tv_time"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -113,7 +112,7 @@
         tools:text="￥169" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/layout_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

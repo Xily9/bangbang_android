@@ -6,7 +6,7 @@ import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
-import com.autowheel.bangbang.ui.msg.ChatActivity
+import com.autowheel.bangbang.ui.msg.activity.ChatActivity
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError

@@ -6,6 +6,7 @@ data class CoachBean(
     var is_pay: Boolean,
     var help_id: Int,
     var name: String,
+    var order_id: Int,
     var price: Double, // 1.1
     var publisher_id: Int, // 1
     var publisher_nickname: String,//发布人昵称

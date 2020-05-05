@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.msg
+package com.autowheel.bangbang.ui.msg.activity
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.MessageBean
+import com.autowheel.bangbang.ui.msg.adapter.ChatAdapter
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.gone
 import com.bumptech.glide.Glide

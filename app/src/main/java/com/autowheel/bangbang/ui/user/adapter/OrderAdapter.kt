@@ -16,15 +16,17 @@ class OrderAdapter(list: List<CoachBookListBean>?) : BaseAdapter<CoachBookListBe
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: CoachBookListBean) {
+        holder.tv_name.text = value.name
         holder.rv_order_select.layoutManager = LinearLayoutManager(context)
-        if (value.selectIndex == -1) {
+        if (value.selectIndex == 0) {
             value.book_userlist[0].select = true
+            value.selectIndex = 1
         }
         val adapter = OrderSelectAdapter(value.book_userlist)
         holder.rv_order_select.adapter = adapter
         adapter.selectListener = {
-            value.book_userlist[value.selectIndex].select = false
-            value.selectIndex = position
+            value.book_userlist[value.selectIndex - 1].select = false
+            value.selectIndex = it + 1
             adapter.notifyDataSetChanged()
         }
         holder.btn_agree.setOnClickListener {

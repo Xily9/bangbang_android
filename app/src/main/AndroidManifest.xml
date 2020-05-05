@@ -47,7 +47,7 @@
         <activity android:name=".ui.note.NotePublishActivity" />
         <activity android:name=".ui.index.activity.PublishActivity" />
         <activity android:name=".ui.note.NotePreviewActivity" />
-        <activity android:name=".ui.msg.ChatActivity" />
+        <activity android:name=".ui.msg.activity.ChatActivity" />
         <activity android:name=".ui.user.activity.UserStudyActivity" />
         <activity android:name=".ui.user.activity.ForgetPasswordActivity" />
         <activity android:name=".ui.user.activity.UserNoteActivity" />
@@ -57,5 +57,6 @@
         <activity android:name=".ui.index.activity.DetailActivity" />
         <activity android:name=".ui.user.activity.UserCoachActivity" />
         <activity android:name=".ui.user.activity.UserCoachRecordActivity" />
+        <activity android:name=".ui.user.activity.OrderActivity" />
     </application>
 </manifest>

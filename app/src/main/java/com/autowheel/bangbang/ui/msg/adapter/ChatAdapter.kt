@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.msg
+package com.autowheel.bangbang.ui.msg.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color

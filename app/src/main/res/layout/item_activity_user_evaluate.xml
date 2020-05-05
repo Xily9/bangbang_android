@@ -22,10 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
+        android:text="交易成功"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/tv_date"
-        tools:text="追加评价" />
+        app:layout_constraintTop_toTopOf="@+id/tv_date" />
 
     <ImageView
         android:id="@+id/imageView5"

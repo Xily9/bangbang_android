@@ -99,4 +99,29 @@ interface ApiService {
     @GET("/coach/released")
     suspend fun getReleasedCoach(): GeneralResponseBean<List<CoachBean>>
 
+    @POST("/coach/agree")
+    @FormUrlEncoded
+    suspend fun agreeCoach(@Field("help_id") helpId: Int, @Field("user_id") userId: Int): GeneralResponseBean<Any>
+
+    @POST("/coach/cancel")
+    @FormUrlEncoded
+    suspend fun cancelCoach(@Field("help_id") helpId: Int): GeneralResponseBean<Any>
+
+    @POST("/coach/reserve/{id}")
+    suspend fun bookCoachAgain(@Path("id") id: Int): GeneralResponseBean<Any>
+
+    @POST("/coach/remove")
+    @FormUrlEncoded
+    suspend fun removeCoach(@Field("help_id") helpId: Int): GeneralResponseBean<Any>
+
+    @POST("/coach/comment")
+    @FormUrlEncoded
+    suspend fun commentCoach(@Field("help_id") helpId: Int, @Field("text") text: String): GeneralResponseBean<Any>
+
+    @GET("/coach/mycomment")
+    suspend fun getCommentHistory(): GeneralResponseBean<List<CoachCommentBean>>
+
+    @POST("/coach/pay")
+    @FormUrlEncoded
+    suspend fun payCoach(@Field("order_id") orderId: Int): GeneralResponseBean<Any>
 }

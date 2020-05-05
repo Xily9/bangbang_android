@@ -16,7 +16,7 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
 import com.autowheel.bangbang.model.network.bean.MessageBean
-import com.autowheel.bangbang.ui.msg.ChatActivity
+import com.autowheel.bangbang.ui.msg.activity.ChatActivity
 import com.jeremyliao.liveeventbus.LiveEventBus
 
 class MessageService : Service() {
