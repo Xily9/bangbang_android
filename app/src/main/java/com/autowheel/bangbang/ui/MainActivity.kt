@@ -9,8 +9,8 @@ import com.autowheel.bangbang.base.BaseActivity
 import com.autowheel.bangbang.ui.index.activity.PublishActivity
 import com.autowheel.bangbang.ui.index.fragment.IndexFragment
 import com.autowheel.bangbang.ui.msg.fragment.MsgFragment
-import com.autowheel.bangbang.ui.note.NoteFragment
-import com.autowheel.bangbang.ui.note.NotePublishActivity
+import com.autowheel.bangbang.ui.note.activity.NotePublishActivity
+import com.autowheel.bangbang.ui.note.fragment.NoteFragment
 import com.autowheel.bangbang.ui.user.activity.LoginActivity
 import com.autowheel.bangbang.ui.user.fragment.UserFragment
 import com.autowheel.bangbang.utils.UserUtil

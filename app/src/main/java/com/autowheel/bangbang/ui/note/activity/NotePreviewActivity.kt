@@ -1,4 +1,4 @@
-package com.autowheel.bangbang.ui.note
+package com.autowheel.bangbang.ui.note.activity
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -31,9 +31,12 @@ class NotePreviewActivity : BackBaseActivity() {
     override fun initViews(savedInstanceState: Bundle?) {
         val content = intent.getStringExtra("content") ?: ""
         val title = intent.getStringExtra("title") ?: ""
+        val tag = intent.getStringExtra("tag") ?: ""
         tv_title.text = title
+        tv_tag.text = tag
         tv_date.text = SimpleDateFormat("YYYY年MM月dd日", Locale.CHINA).format(Date())
         tv_nickname.text = UserUtil.profile.nickname
+        tv_signature.text = UserUtil.profile.signature
         Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
             .error(R.mipmap.ic_launcher_round).into(iv_avatar)

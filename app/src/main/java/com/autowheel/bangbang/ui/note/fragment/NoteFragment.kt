@@ -1,9 +1,9 @@
-package com.autowheel.bangbang.ui.note
+package com.autowheel.bangbang.ui.note.fragment
 
 import android.os.Bundle
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseFragment
-import com.autowheel.bangbang.ui.index.activity.SearchActivity
+import com.autowheel.bangbang.ui.note.activity.NoteSearchActivity
 import com.autowheel.bangbang.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_note.*
 
@@ -28,7 +28,7 @@ class NoteFragment : BaseFragment() {
     override fun initToolbar() {
         toolbar_title.text = "笔记"
         iv_search.setOnClickListener {
-            startActivity<SearchActivity>()
+            startActivity<NoteSearchActivity>()
         }
     }
 

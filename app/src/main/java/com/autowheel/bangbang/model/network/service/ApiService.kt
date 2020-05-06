@@ -65,9 +65,6 @@ interface ApiService {
     @GET("/user/grade")
     suspend fun getGrade(): GeneralResponseBean<List<GradeBean>>
 
-    @GET("/note/published")
-    suspend fun getUserNote(): GeneralResponseBean<List<UserNoteBean>>
-
     @POST("/coach")
     @FormUrlEncoded
     suspend fun publishCoach(
@@ -124,4 +121,21 @@ interface ApiService {
     @POST("/coach/pay")
     @FormUrlEncoded
     suspend fun payCoach(@Field("order_id") orderId: Int): GeneralResponseBean<Any>
+
+    @POST("/note")
+    @FormUrlEncoded
+    suspend fun publishNote(@Field("title") title: String, @Field("tag") tag: String, @Field("content") content: String): GeneralResponseBean<NotePublishBean>
+
+    @GET("/note/published")
+    suspend fun getReleasedNote(): GeneralResponseBean<List<NoteBean>>
+
+    @GET("/note/search")
+    suspend fun searchNote(@Query("word") word: String): GeneralResponseBean<List<NoteBean>>
+
+    @GET("/note/{id}")
+    suspend fun getNoteDetail(@Path("id") id: Int): GeneralResponseBean<NoteBean>
+
+    @Multipart
+    @POST("/note/upload")
+    suspend fun uploadNoteFile(@Part file: MultipartBody.Part): GeneralResponseBean<NoteUploadFileBean>
 }

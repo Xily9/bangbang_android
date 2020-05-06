@@ -1,11 +1,9 @@
-package com.autowheel.bangbang.ui.note
+package com.autowheel.bangbang.ui.note.activity
 
 import android.Manifest
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,14 +14,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.FileProvider
+import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
+import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.ui.note.handler.CodeEditHandler
 import com.autowheel.bangbang.ui.note.handler.StrikeThroughEditHandler
-import com.autowheel.bangbang.utils.FileUtil
-import com.autowheel.bangbang.utils.startActivity
-import com.autowheel.bangbang.utils.text
-import com.autowheel.bangbang.utils.toastError
+import com.autowheel.bangbang.utils.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -40,9 +37,7 @@ import kotlinx.android.synthetic.main.layout_dialog_imgtype.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.BufferedOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 
 
@@ -52,7 +47,6 @@ import java.io.IOException
 class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
     private lateinit var markwon: Markwon
     private lateinit var dialog: Dialog
-    private var imageUri: Uri? = null
     override fun getToolbarTitle(): String {
         return "发布笔记"
     }
@@ -64,6 +58,26 @@ class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
     override fun initViews(savedInstanceState: Bundle?) {
         initEditor()
         initUploadImageDialog()
+        btn_insert_file.setOnClickListener {
+            Dexter.withActivity(this)
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        val intent = Intent("android.intent.action.GET_CONTENT")
+                        intent.type = "*/*"
+                        startActivityForResult(intent, 3)
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    }
+                }).check()
+        }
         //startActivity<NoteDetailActivity>()
     }
 
@@ -116,7 +130,7 @@ class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
-                    imageUri = if (Build.VERSION.SDK_INT >= 24) {
+                    val imageUri = if (Build.VERSION.SDK_INT >= 24) {
                         FileProvider.getUriForFile(
                             this@NotePublishActivity,
                             "com.autowheel.bangbang.fileProvider",
@@ -167,54 +181,87 @@ class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             when (requestCode) {
-                1 -> imageUri?.let {
-                    val bitmap =
-                        BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-                    uploadImage(bitmap)
-                }
+                1 -> uploadFile(File(externalCacheDir, "output_image.jpg"), true)
                 2 -> {
                     val imagePath: String? = FileUtil.getPath(this, data?.data!!)
                     if (imagePath != null) {
                         val file = File(imagePath)
-                        val imageUri = if (Build.VERSION.SDK_INT >= 24) {
-                            FileProvider.getUriForFile(
-                                this,
-                                "com.autowheel.bangbang.fileProvider",
-                                file
-                            )
-                        } else {
-                            Uri.fromFile(file)
-                        }
-                        imageUri?.let {
-                            val bitmap =
-                                BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-                            uploadImage(bitmap)
-                        }
+                        uploadFile(file, true)
                     } else {
                         toastError("获取图片失败！！")
+                    }
+                }
+                3 -> {
+                    val filePath: String? = FileUtil.getPath(this, data?.data!!)
+                    if (filePath != null) {
+                        val file = File(filePath)
+                        uploadFile(file, false)
+                    } else {
+                        toastError("获取文件失败！！")
                     }
                 }
             }
         }
     }
 
-    private fun uploadImage(bitmap: Bitmap) {
-        val file = File(externalCacheDir, "${System.currentTimeMillis()}.jpg")
-        val bos = BufferedOutputStream(FileOutputStream(file))
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-        bos.flush()
-        bos.close()
+    private fun uploadFile(file: File, isImage: Boolean) {
         val requestFile =
             RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        val body = MultipartBody.Part.createFormData("avatar", file.name, requestFile)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         val proDialog = ProgressDialog(this)
         proDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
         proDialog.setMessage("上传中,请稍候..")
         proDialog.isIndeterminate = false
         proDialog.setCancelable(false)
         proDialog.show()
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().uploadNoteFile(body)
+            if (result.code == 0) {
+                toastSuccess("上传成功!")
+                et_content.append(if (isImage) "![图片](${BASE_URL}/note/file/${result.data.file_id})" else "[点击下载附件](${BASE_URL}/note/file/${result.data.file_id})")
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+            proDialog.dismiss()
+        })
     }
 
+    private fun publish() {
+        val title = et_title.text()
+        val content = et_content.text()
+        val tag = et_tag.text()
+        if (title.isBlank()) {
+            toastError("标题不能为空!")
+        } else if (tag.isBlank()) {
+            toastError("TAG不能为空!")
+        } else if (content.isBlank()) {
+            toastError("笔记内容不能为空!")
+        } else {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("提交中,请稍候..")
+            progressDialog.show()
+            launch(tryBlock = {
+                val result =
+                    RetrofitHelper.getApiService().publishNote(title, tag, content)
+                if (result.code == 0) {
+                    toastSuccess("发布成功!")
+                    startActivity<NoteDetailActivity>("id" to result.data.id)
+                    finish()
+                } else {
+                    toastError(result.msg)
+                }
+            }, catchBlock = {
+                it.printStackTrace()
+                toastError("网络请求出错!")
+            }, finallyBlock = {
+                progressDialog.dismiss()
+            })
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_note_publish_menu, menu)
@@ -226,8 +273,12 @@ class NotePublishActivity : BackBaseActivity(), View.OnClickListener {
             R.id.action_preview -> {
                 startActivity<NotePreviewActivity>(
                     "title" to et_title.text(),
-                    "content" to et_content.text()
+                    "content" to et_content.text(),
+                    "tag" to et_tag.text()
                 )
+            }
+            R.id.action_finish -> {
+                publish()
             }
         }
         return super.onOptionsItemSelected(item)
