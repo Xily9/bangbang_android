@@ -19,6 +19,7 @@ class UserNoteAdapter(list: List<NoteBean>?) : BaseAdapter<NoteBean>(list) {
         holder.tv_title.text = value.title
         holder.tv_tag.text = value.tag
         holder.tv_content.text = value.content
+        holder.tv_good_number.text = value.compliments.toString()
         holder.btn_edit.setOnClickListener {
             btnEditListener.invoke(position)
         }

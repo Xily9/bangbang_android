@@ -6,7 +6,7 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.NoteBean
-import com.autowheel.bangbang.ui.note.activity.NotePublishActivity
+import com.autowheel.bangbang.ui.note.activity.NoteEditActivity
 import com.autowheel.bangbang.ui.user.adapter.UserNoteAdapter
 import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
@@ -40,7 +40,13 @@ class UserNoteActivity : BackBaseActivity() {
         rv_note.layoutManager = LinearLayoutManager(this)
         adapter = UserNoteAdapter(list)
         adapter.btnEditListener = {
-            startActivity<NotePublishActivity>("data" to list[it])
+            val data = list[it]
+            startActivity<NoteEditActivity>(
+                "note_id" to data.note_id,
+                "title" to data.title,
+                "tag" to data.tag,
+                "content" to data.content
+            )
         }
         adapter.btnApplyListener = {
 

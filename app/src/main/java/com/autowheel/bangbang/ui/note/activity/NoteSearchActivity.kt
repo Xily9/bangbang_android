@@ -141,7 +141,7 @@ class NoteSearchActivity : BaseActivity() {
         rv_note.layoutManager = LinearLayoutManager(this)
         adapter = NoteAdapter(list)
         adapter.setOnItemClickListener {
-            startActivity<NoteDetailActivity>("id" to list[it])
+            startActivity<NoteDetailActivity>("id" to list[it].note_id)
         }
         rv_note.adapter = adapter
     }

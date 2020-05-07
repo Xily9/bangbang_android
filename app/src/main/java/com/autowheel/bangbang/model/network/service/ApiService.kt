@@ -138,4 +138,21 @@ interface ApiService {
     @Multipart
     @POST("/note/upload")
     suspend fun uploadNoteFile(@Part file: MultipartBody.Part): GeneralResponseBean<NoteUploadFileBean>
+
+    @GET("/note/categories")
+    suspend fun getNoteTags(): GeneralResponseBean<List<String>>
+
+    @GET("/note/index")
+    suspend fun getNotes(@Query("tag") tag: String, @Query("page") page: Int, @Query("each_page") eachPage: Int): NoteIndexResponseBean
+
+    @GET("/coach/index")
+    suspend fun getCoaches(@Query("page") page: Int, @Query("each_page") eachPage: Int): CoachIndexResponseBean
+
+    @POST("/note/edit")
+    @FormUrlEncoded
+    suspend fun editNote(@Field("note_id") noteId: Int, @Field("content") content: String): GeneralResponseBean<Any>
+
+    @GET("/coach/showcomments")
+    suspend fun getCoachComments(@Query("help_id") helpId: Int): CoachCommentResponseBean
+
 }

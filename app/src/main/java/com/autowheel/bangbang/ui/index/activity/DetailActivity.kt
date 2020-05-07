@@ -2,15 +2,15 @@ package com.autowheel.bangbang.ui.index.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
+import com.autowheel.bangbang.model.network.bean.CoachCommentBean
+import com.autowheel.bangbang.ui.index.adapter.CommentAdapter
 import com.autowheel.bangbang.ui.msg.activity.ChatActivity
-import com.autowheel.bangbang.utils.UserUtil
-import com.autowheel.bangbang.utils.startActivity
-import com.autowheel.bangbang.utils.toastError
-import com.autowheel.bangbang.utils.toastSuccess
+import com.autowheel.bangbang.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_detail.*
  */
 class DetailActivity : BackBaseActivity() {
     private var id = 0
+    private lateinit var adapter: CommentAdapter
+    private var commentList = arrayListOf<CoachCommentBean>()
     override fun getToolbarTitle(): String {
         return "辅导详情"
     }
@@ -40,7 +42,15 @@ class DetailActivity : BackBaseActivity() {
                 .setNegativeButton("取消", null)
                 .show()
         }
+        initRecyclerView()
         loadData()
+        loadComment()
+    }
+
+    private fun initRecyclerView() {
+        rv_comment.layoutManager = LinearLayoutManager(this)
+        adapter = CommentAdapter(commentList)
+        rv_comment.adapter = adapter
     }
 
     private fun loadData() {
@@ -82,7 +92,26 @@ class DetailActivity : BackBaseActivity() {
     }
 
     private fun loadComment() {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getCoachComments(id)
+            if (result.code == 0) {
+                commentList.clear()
+                commentList.addAll(result.data)
+                tv_comment_count.text = "共${result.length}条"
+                if (commentList.isEmpty()) {
+                    tv_empty.visible()
+                    rv_comment.gone()
+                } else {
+                    tv_empty.gone()
+                    rv_comment.visible()
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }, catchBlock = {
 
+        }, finallyBlock = {
+
+        })
     }
 
     private fun orderCoach() {

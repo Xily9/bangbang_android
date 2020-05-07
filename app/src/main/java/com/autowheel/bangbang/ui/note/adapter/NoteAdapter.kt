@@ -23,6 +23,7 @@ class NoteAdapter(list: List<NoteBean>?) : BaseAdapter<NoteBean>(list) {
             .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
         holder.tv_author.text = "作者：${value.publisher_nickname}"
         holder.tv_title.text = value.title
-        holder.tv_content.text = value.content.substring(0, 30) + "..."
+        holder.tv_content.text = value.content
+        holder.tv_good_number.text = value.compliments.toString()
     }
 }
