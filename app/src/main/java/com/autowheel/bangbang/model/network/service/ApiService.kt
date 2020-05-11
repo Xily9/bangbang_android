@@ -78,6 +78,10 @@ interface ApiService {
         @Field("price") price: String
     ): GeneralResponseBean<CoachPublishBean>
 
+    @POST("/coach/edit")
+    @FormUrlEncoded
+    suspend fun editCoach(@Field("help_id") helpId: Int, @Field("declaration") declaration: String): GeneralResponseBean<Any>
+
     @GET("/coach/{id}")
     suspend fun getCoachDetail(@Path("id") id: Int): GeneralResponseBean<CoachBean>
 
@@ -113,7 +117,7 @@ interface ApiService {
 
     @POST("/coach/comment")
     @FormUrlEncoded
-    suspend fun commentCoach(@Field("help_id") helpId: Int, @Field("text") text: String): GeneralResponseBean<Any>
+    suspend fun commentCoach(@Field("help_id") helpId: Int, @Field("star") star: Float, @Field("text") text: String): GeneralResponseBean<Any>
 
     @GET("/coach/mycomment")
     suspend fun getCommentHistory(): GeneralResponseBean<List<CoachCommentBean>>
@@ -154,5 +158,17 @@ interface ApiService {
 
     @GET("/coach/showcomments")
     suspend fun getCoachComments(@Query("help_id") helpId: Int): CoachCommentResponseBean
+
+    @GET("/user/star/{uid}")
+    suspend fun getUserStar(@Path("uid") uid: Int): GeneralResponseBean<UserStarBean>
+
+    @POST("/note/compliments")
+    @FormUrlEncoded
+    suspend fun complimentNote(@Field("note_id") noteId: Int): GeneralResponseBean<Any>
+
+    @POST("/note/recomp")
+    @FormUrlEncoded
+    suspend fun reComplimentNote(@Field("note_id") noteId: Int): GeneralResponseBean<Any>
+
 
 }

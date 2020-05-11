@@ -60,5 +60,9 @@
         <activity android:name=".ui.note.activity.NoteSearchActivity" />
         <activity android:name=".ui.note.activity.NoteEditActivity" />
         <activity android:name=".ui.index.activity.EvaluateActivity" />
+        <activity android:name=".ui.user.activity.UserEvaluateActivity" />
+        <activity android:name=".ui.index.activity.EditActivity" />
+
+        <service android:name=".service.MessageService" />
     </application>
 </manifest>

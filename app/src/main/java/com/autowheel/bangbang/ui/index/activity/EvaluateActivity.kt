@@ -73,7 +73,7 @@ class EvaluateActivity : BackBaseActivity() {
             toastError("评价内容不能为空！")
         } else {
             launch(tryBlock = {
-                val result = RetrofitHelper.getApiService().commentCoach(id, text)
+                val result = RetrofitHelper.getApiService().commentCoach(id, ratingBar.rating, text)
                 if (result.code == 0) {
                     toastSuccess("评价成功！")
                     finish()

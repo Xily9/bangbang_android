@@ -48,7 +48,7 @@
         android:layout_marginTop="183dp"
         android:background="@drawable/bg_input"
         android:ems="10"
-        android:hint="请输入用户名/email"
+        android:hint="请输入用户名"
         android:paddingStart="8dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#B5FFFFFF"

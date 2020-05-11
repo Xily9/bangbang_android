@@ -7,7 +7,9 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.CoachBean
+import com.autowheel.bangbang.ui.index.activity.EditActivity
 import com.autowheel.bangbang.ui.user.adapter.UserCoachAdapter
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
 import com.autowheel.bangbang.utils.toastSuccess
@@ -40,7 +42,10 @@ class UserCoachActivity : BackBaseActivity() {
         rv_coach.layoutManager = LinearLayoutManager(this)
         adapter = UserCoachAdapter(list)
         adapter.btnEditListener = {
-
+            startActivity<EditActivity>(
+                "id" to list[it].help_id,
+                "declaration" to list[it].declaration
+            )
         }
         adapter.btnRemoveListener = { position ->
             AlertDialog.Builder(this)

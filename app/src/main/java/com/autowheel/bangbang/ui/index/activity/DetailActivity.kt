@@ -59,6 +59,7 @@ class DetailActivity : BackBaseActivity() {
             if (result.code == 0) {
                 val data = result.data
                 loadUserProfile(data.publisher_id)
+                loadRating(data.publisher_id)
                 if (data.type == "course")
                     tv_skill.text = "${data.name}(成绩${data.course_score})"
                 else
@@ -88,6 +89,15 @@ class DetailActivity : BackBaseActivity() {
             }
         }, catchBlock = {
 
+        })
+    }
+
+    private fun loadRating(uid: Int) {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getUserStar(uid)
+            if (result.code == 0) {
+                ratingBar.rating = result.data.star
+            }
         })
     }
 

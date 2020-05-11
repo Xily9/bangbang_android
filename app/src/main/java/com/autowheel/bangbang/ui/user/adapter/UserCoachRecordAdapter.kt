@@ -5,8 +5,6 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseAdapter
 import com.autowheel.bangbang.model.network.bean.CoachBean
 import com.autowheel.bangbang.utils.UserUtil
-import com.autowheel.bangbang.utils.gone
-import com.autowheel.bangbang.utils.visible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
 import kotlinx.android.synthetic.main.item_activity_user_coach_record.*
@@ -41,12 +39,12 @@ class UserCoachRecordAdapter(list: List<CoachBean>?) : BaseAdapter<CoachBean>(li
             holder.btn_action1.text = "再次预约"
             holder.btn_action2.text = "评价"
             holder.tv_status.text = "交易成功"
-            holder.layout_delete.visible()
+            //holder.layout_delete.visible()
         } else {
             holder.btn_action1.text = "取消预约"
             holder.btn_action2.text = "立即付款"
             holder.tv_status.text = "待付款"
-            holder.layout_delete.gone()
+            //holder.layout_delete.gone()
         }
     }
 }

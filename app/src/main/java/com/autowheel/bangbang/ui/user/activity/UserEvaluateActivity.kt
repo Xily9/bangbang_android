@@ -6,11 +6,12 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.CoachCommentBean
+import com.autowheel.bangbang.ui.index.activity.EvaluateActivity
 import com.autowheel.bangbang.ui.user.adapter.UserEvaluateAdapter
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
-import kotlinx.android.synthetic.main.activity_user_coach.*
-import kotlinx.android.synthetic.main.activity_user_evaluate.swipe_refresh_layout
+import kotlinx.android.synthetic.main.activity_user_evaluate.*
 
 /**
  * Created by Xily on 2020/5/4.
@@ -36,12 +37,12 @@ class UserEvaluateActivity : BackBaseActivity() {
     }
 
     private fun initRecyclerView() {
-        rv_coach.layoutManager = LinearLayoutManager(this)
+        rv_evaluate.layoutManager = LinearLayoutManager(this)
         adapter = UserEvaluateAdapter(list)
         adapter.btnListener = {
-
+            startActivity<EvaluateActivity>("id" to list[it].help_id)
         }
-        rv_coach.adapter = adapter
+        rv_evaluate.adapter = adapter
     }
 
     private fun loadData() {

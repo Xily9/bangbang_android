@@ -42,7 +42,7 @@ class NoteFragment : BaseFragment() {
         swipe_refresh_layout.setOnRefreshListener {
             page = 1
             //startActivity<ChatActivity>("id" to 1)
-            loadData(tagList[curSelectTagIndex].name, true)
+            loadTags()
         }
     }
 
@@ -92,14 +92,13 @@ class NoteFragment : BaseFragment() {
             if (result.code == 0) {
                 tagList.clear()
                 tagList.addAll(result.data.map { NoteTagBean(it, false) })
-                curSelectTagIndex = 0
                 if (tagList.isEmpty()) {
                     toastInfo("空空如也!")
                 } else {
-                    tagList[0].isSelected = true
+                    tagList[curSelectTagIndex].isSelected = true
                     tagAdapter.notifyDataSetChanged()
                     page = 1
-                    loadData(tagList[0].name, true)
+                    loadData(tagList[curSelectTagIndex].name, true)
                 }
             }
         })
