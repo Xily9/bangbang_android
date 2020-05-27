@@ -2,6 +2,7 @@ package com.autowheel.bangbang.model.network.service
 
 import com.autowheel.bangbang.model.network.bean.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,7 +12,7 @@ import retrofit2.http.*
 interface ApiService {
     @POST("/auth/login")
     @FormUrlEncoded
-    fun login(@Field("username") username: String, @Field("password") password: String): Call<GeneralResponseBean<Any>>
+    fun login(@Field("username") username: String, @Field("password") password: String): Call<GeneralResponseBean<LoginBean>>
 
     @POST("/auth/register")
     @FormUrlEncoded
@@ -169,6 +170,29 @@ interface ApiService {
     @POST("/note/recomp")
     @FormUrlEncoded
     suspend fun reComplimentNote(@Field("note_id") noteId: Int): GeneralResponseBean<Any>
+
+    @GET("/assist")
+    suspend fun getHelpList(): GeneralResponseBean<List<HelpBean>>
+
+    @POST("/assist/apply")
+    @FormUrlEncoded
+    suspend fun applyHelp(
+        @Field("user_id") userId: Int,
+        @Field("course") course: String,
+        @Field("grade") grade: String,
+        @Field("course_token") courseToken: String,
+        @Field("note") note: String
+    ): GeneralResponseBean<Any>
+
+    @Multipart
+    @POST("/assist/pickup")
+    suspend fun pickUpHelp(
+        @Part("couple_id") id: RequestBody,
+        @Part file: MultipartBody.Part
+    ): GeneralResponseBean<NoteUploadFileBean>
+
+    @GET("/assist/myassist")
+    suspend fun getUserHelp(): GeneralResponseBean<List<UserHelpBean>>
 
 
 }

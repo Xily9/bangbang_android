@@ -13,6 +13,11 @@ object UserUtil {
             DataManager.verify = value
             field = value
         }
+    var isAdmin = DataManager.admin
+        set(value) {
+            DataManager.admin = value
+            field = value
+        }
     var avatarUpdateTime = System.currentTimeMillis().toString()
     var token = DataManager.token
         set(value) {

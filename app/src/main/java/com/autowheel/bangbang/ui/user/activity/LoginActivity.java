@@ -8,6 +8,7 @@ import com.autowheel.bangbang.base.BaseViewBindingActivity;
 import com.autowheel.bangbang.databinding.ActivityLoginBinding;
 import com.autowheel.bangbang.model.network.RetrofitHelper;
 import com.autowheel.bangbang.model.network.bean.GeneralResponseBean;
+import com.autowheel.bangbang.model.network.bean.LoginBean;
 import com.autowheel.bangbang.model.network.bean.ProfileBean;
 import com.autowheel.bangbang.ui.MainActivity;
 import com.autowheel.bangbang.utils.DeviceUtilKt;
@@ -57,13 +58,16 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("登录中...");
             progressDialog.show();
-            RetrofitHelper.getApiService().login(username, password).enqueue(new Callback<GeneralResponseBean<Object>>() {
+            RetrofitHelper.getApiService().login(username, password).enqueue(new Callback<GeneralResponseBean<LoginBean>>() {
                 @Override
-                public void onResponse(Call<GeneralResponseBean<Object>> call, Response<GeneralResponseBean<Object>> response) {
+                public void onResponse(Call<GeneralResponseBean<LoginBean>> call, Response<GeneralResponseBean<LoginBean>> response) {
                     progressDialog.dismiss();
                     if (response.isSuccessful()) {
-                        GeneralResponseBean<Object> loginResponseBean = response.body();
+                        GeneralResponseBean<LoginBean> loginResponseBean = response.body();
                         if (loginResponseBean.getCode() == 0) {
+                            if (loginResponseBean.getData().is_admin()) {
+                                UserUtil.INSTANCE.setAdmin(true);
+                            }
                             getProfile();
                         } else {
                             ToastyUtilKt.toastError(loginResponseBean.getMsg());
@@ -76,7 +80,7 @@ public class LoginActivity extends BaseViewBindingActivity<ActivityLoginBinding>
                 }
 
                 @Override
-                public void onFailure(Call<GeneralResponseBean<Object>> call, Throwable t) {
+                public void onFailure(Call<GeneralResponseBean<LoginBean>> call, Throwable t) {
                     progressDialog.dismiss();
                     ToastyUtilKt.toastError("网络请求出错!");
                 }

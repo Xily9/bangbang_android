@@ -8,6 +8,7 @@ import com.autowheel.bangbang.base.BaseFragment
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.CoachBean
 import com.autowheel.bangbang.ui.index.activity.DetailActivity
+import com.autowheel.bangbang.ui.index.activity.HelpActivity
 import com.autowheel.bangbang.ui.index.activity.SearchActivity
 import com.autowheel.bangbang.ui.index.adapter.CoachAdapter
 import com.autowheel.bangbang.ui.index.adapter.ImageAdapter
@@ -52,6 +53,9 @@ class IndexFragment : BaseFragment() {
             layoutInflater.inflate(R.layout.item_fragment_index_header, rv_coach, false)
         headerView.banner.apply {
             adapter = ImageAdapter(arrayListOf("", ""))
+            adapter.setOnBannerListener { data, position ->
+                startActivity<HelpActivity>()
+            }
             indicator = CircleIndicator(requireContext())
             setBannerRound2(20f)
             start()

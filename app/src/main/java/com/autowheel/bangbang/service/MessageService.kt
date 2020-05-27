@@ -12,12 +12,21 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
+import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
 import com.autowheel.bangbang.model.network.bean.MessageBean
 import com.autowheel.bangbang.ui.msg.activity.ChatActivity
+import com.autowheel.bangbang.utils.UserUtil
+import com.autowheel.bangbang.utils.debug
+import com.google.gson.Gson
 import com.jeremyliao.liveeventbus.LiveEventBus
+import io.socket.client.IO
+import io.socket.client.Manager
+import io.socket.client.Socket
+import io.socket.engineio.client.Transport
+import org.json.JSONObject
 
 class MessageService : Service() {
     private val notificationManager: NotificationManager
@@ -26,6 +35,7 @@ class MessageService : Service() {
     private var chatId = 0
     private var isStop = false
     private var observer: Observer<MessageEventBean>? = null
+    private var socket: Socket? = null
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -59,13 +69,13 @@ class MessageService : Service() {
 
     private fun receiveMessage(messageBean: MessageBean) {
         LiveEventBus.get("message", MessageBean::class.java).post(messageBean)
-        if (!isChatActivity || chatId != messageBean.from) {
+        if (!isChatActivity || chatId != messageBean.from_user_id) {
             val callback = {
-                val nickName: String = if (messageBean.from > 0)
-                    messageBean.fromNickname
+                val nickName: String = if (messageBean.from_user_id > 0)
+                    messageBean.from_nickname
                 else
                     "系统消息"
-                showNotification(nickName, messageBean.message, messageBean.from)
+                showNotification(nickName, messageBean.content, messageBean.from_user_id)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 checkNotificationChannel {
@@ -95,14 +105,59 @@ class MessageService : Service() {
     }
 
     private fun sendMessage(message: String) {
-
+        val map = hashMapOf<String, Any>()
+        map["room"] = chatId
+        map["text"] = message
+        socket?.emit("getmsg", Gson().toJson(map))
     }
 
     private fun initWebSocket() {
-
+        /*val logInterceptor = HttpLoggingInterceptor().apply {
+            level =
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        }
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(logInterceptor)
+            .retryOnConnectionFailure(false)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .build()
+        val opts = IO.Options()
+        opts.callFactory = okHttpClient
+        opts.webSocketFactory = okHttpClient*/
+        socket = IO.socket(BASE_URL + "/chat")?.apply {
+            io().on(Manager.EVENT_TRANSPORT) {
+                val transport = it[0] as Transport
+                transport.on(Transport.EVENT_REQUEST_HEADERS) {
+                    val headers = it[0] as MutableMap<String, List<String>>
+                    // modify request headers
+                    headers.put("Cookie", listOf(UserUtil.token.split(";")[0] + ";"))
+                }
+            }
+            on(Socket.EVENT_CONNECT) {
+                debug("connect")
+                emit("join")
+            }.on("sendmsg") {
+                debug(it[0] as String)
+                val message = JSONObject(it[0] as String)
+                val messageBean = MessageBean(
+                    message.getInt("room"),
+                    message.getString("user_nickname"),
+                    UserUtil.profile.uid,
+                    (System.currentTimeMillis() / 1000).toInt(),
+                    message.getString("text")
+                )
+                receiveMessage(messageBean)
+            }.on(Socket.EVENT_DISCONNECT) {
+                debug("disconnect")
+            }
+            connect()
+        }
     }
 
     override fun onDestroy() {
+        socket?.disconnect()
+        socket?.off()
         isStop = true
         observer?.let {
             LiveEventBus.get("messageEvent", MessageEventBean::class.java).removeObserver(it)

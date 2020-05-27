@@ -5,26 +5,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
-import com.autowheel.bangbang.model.network.bean.NoteBean
-import com.autowheel.bangbang.ui.note.activity.NoteEditActivity
-import com.autowheel.bangbang.ui.user.adapter.UserNoteAdapter
-import com.autowheel.bangbang.utils.startActivity
+import com.autowheel.bangbang.model.network.bean.UserHelpBean
+import com.autowheel.bangbang.ui.user.adapter.UserHelpAdapter
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
-import kotlinx.android.synthetic.main.activity_user_note.*
+import kotlinx.android.synthetic.main.activity_user_help.*
 
 /**
- * Created by Xily on 2020/4/26.
+ * Created by Xily on 2020/5/25.
  */
-class UserNoteActivity : BackBaseActivity() {
-    private lateinit var adapter: UserNoteAdapter
-    private val list = arrayListOf<NoteBean>()
+class UserHelpActivity : BackBaseActivity() {
+    private lateinit var adapter: UserHelpAdapter
+    private val list = arrayListOf<UserHelpBean>()
     override fun getToolbarTitle(): String {
-        return "我发布的笔记"
+        return "我的帮扶"
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_user_note
+        return R.layout.activity_user_help
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -37,21 +35,22 @@ class UserNoteActivity : BackBaseActivity() {
     }
 
     private fun initRecyclerView() {
-        rv_note.layoutManager = LinearLayoutManager(this)
-        adapter = UserNoteAdapter(list)
-        adapter.btnEditListener = {
+        rv_help.layoutManager = LinearLayoutManager(this)
+        adapter = UserHelpAdapter(list)
+        adapter.btnApplyListener = {
             val data = list[it]
-            startActivity<NoteEditActivity>(
-                "note_id" to data.note_id
-            )
+
         }
-        rv_note.adapter = adapter
+        adapter.btnPickListener = {
+            val data = list[it]
+        }
+        rv_help.adapter = adapter
     }
 
     private fun loadData() {
         swipe_refresh_layout.isRefreshing = true
         launch(tryBlock = {
-            val result = RetrofitHelper.getApiService().getReleasedNote()
+            val result = RetrofitHelper.getApiService().getUserHelp()
             if (result.code == 0) {
                 list.clear()
                 list.addAll(result.data)

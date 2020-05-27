@@ -61,9 +61,6 @@ class NoteEditActivity : BackBaseActivity(), View.OnClickListener {
 
     override fun initViews(savedInstanceState: Bundle?) {
         id = intent.getIntExtra("note_id", 0)
-        title = intent.getStringExtra("title") ?: ""
-        tag = intent.getStringExtra("tag") ?: ""
-        content = intent.getStringExtra("content") ?: ""
         if (id == 0) {
             toastError("数据传输异常!")
             finish()
@@ -91,7 +88,27 @@ class NoteEditActivity : BackBaseActivity(), View.OnClickListener {
                     }
                 }).check()
         }
+        loadData()
         //startActivity<NoteDetailActivity>()
+    }
+
+    private fun loadData() {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getNoteDetail(id)
+            if (result.code == 0) {
+                title = result.data.title
+                tag = result.data.tag
+                content = result.data.content
+                et_content.setText(content)
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+
+        })
     }
 
     private fun initEditor() {
@@ -103,7 +120,6 @@ class NoteEditActivity : BackBaseActivity(), View.OnClickListener {
             .useEditHandler(StrikeThroughEditHandler())
             .build()
         et_content.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor))
-        et_content.setText(content)
     }
 
     private fun initUploadImageDialog() {

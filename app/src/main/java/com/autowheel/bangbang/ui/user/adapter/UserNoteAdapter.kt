@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.item_activity_user_note.*
  * Created by Xily on 2020/4/26.
  */
 class UserNoteAdapter(list: List<NoteBean>?) : BaseAdapter<NoteBean>(list) {
-    var btnApplyListener: ((Int) -> Unit) = {}
     var btnEditListener: ((Int) -> Unit) = {}
     override fun getLayoutId(): Int {
         return R.layout.item_activity_user_note
@@ -22,9 +21,6 @@ class UserNoteAdapter(list: List<NoteBean>?) : BaseAdapter<NoteBean>(list) {
         holder.tv_good_number.text = value.compliments.toString()
         holder.btn_edit.setOnClickListener {
             btnEditListener.invoke(position)
-        }
-        holder.btn_apply.setOnClickListener {
-            btnApplyListener.invoke(position)
         }
     }
 }

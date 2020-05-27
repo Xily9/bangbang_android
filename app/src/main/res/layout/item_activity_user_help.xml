@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -19,19 +20,25 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="6dp"
+        android:textColor="#333"
         android:textSize="16sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_subject"
         app:layout_constraintStart_toEndOf="@+id/iv_avatar"
-        app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
+        app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="测试" />
 
     <TextView
         android:id="@+id/tv_subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
         app:layout_constraintStart_toStartOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="测试测试" />
 
     <Button
         android:id="@+id/btn_apply"

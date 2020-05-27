@@ -68,6 +68,10 @@ dependencies {
     implementation "io.noties.markwon:image-glide:$markwon_version"
     implementation "io.noties.markwon:ext-tables:$markwon_version"
     implementation 'com.github.arcadefire:nice-spinner:1.4.3'
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
     debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'
     releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.1'
 }
