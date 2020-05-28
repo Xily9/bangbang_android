@@ -58,6 +58,9 @@ class UserFragment : BaseFragment() {
         layout_evaluate.setOnClickListener {
             startActivity<UserEvaluateActivity>()
         }
+        layout_help.setOnClickListener {
+            startActivity<UserHelpActivity>()
+        }
     }
 
     private fun getProfile() {

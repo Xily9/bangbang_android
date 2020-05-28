@@ -6,7 +6,9 @@ import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.UserHelpBean
+import com.autowheel.bangbang.ui.index.activity.HelpPickActivity
 import com.autowheel.bangbang.ui.user.adapter.UserHelpAdapter
+import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
 import kotlinx.android.synthetic.main.activity_user_help.*
@@ -43,6 +45,7 @@ class UserHelpActivity : BackBaseActivity() {
         }
         adapter.btnPickListener = {
             val data = list[it]
+            startActivity<HelpPickActivity>("id" to data.couple_id)
         }
         rv_help.adapter = adapter
     }
