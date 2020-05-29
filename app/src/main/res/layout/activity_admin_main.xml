@@ -57,7 +57,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -89,10 +89,10 @@
             android:paddingBottom="3dp"
             android:textColor="#101010"
             android:textSize="12sp"
+            android:text="管理员"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_nickname"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-            tools:text="寻找英语补习" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -107,13 +107,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_coach"
+        android:id="@+id/layout_help_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintEnd_toStartOf="@id/layout_coach_record"
+        app:layout_constraintEnd_toStartOf="@id/layout_help_approve"
         app:layout_constraintTop_toBottomOf="@id/layout_user">
 
         <View
@@ -153,13 +153,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_coach_record"
+        android:id="@+id/layout_help_approve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@id/layout_coach"
-        app:layout_constraintEnd_toStartOf="@id/layout_evaluate"
-        app:layout_constraintTop_toTopOf="@id/layout_coach">
+        app:layout_constraintStart_toEndOf="@id/layout_help_add"
+        app:layout_constraintEnd_toStartOf="@id/layout_help_point_check"
+        app:layout_constraintTop_toTopOf="@id/layout_help_add">
 
         <View
             android:id="@+id/view2"
@@ -198,13 +198,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_evaluate"
+        android:id="@+id/layout_help_point_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@id/layout_coach_record"
+        app:layout_constraintStart_toEndOf="@id/layout_help_approve"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/layout_coach">
+        app:layout_constraintTop_toTopOf="@id/layout_help_add">
 
         <View
             android:id="@+id/view3"
@@ -252,5 +252,5 @@
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_coach" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_help_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

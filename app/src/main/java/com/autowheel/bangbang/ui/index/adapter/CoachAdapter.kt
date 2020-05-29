@@ -20,7 +20,7 @@ class CoachAdapter(list: List<CoachBean>?) : BaseAdapter<CoachBean>(list) {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: CoachBean) {
         Glide.with(context).load("$BASE_URL/user/avatar/${value.publisher_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_nickname.text = value.publisher_nickname
         if (value.type == "course") {
             holder.tv_detail.text = "${value.name}(成绩${value.course_score})"

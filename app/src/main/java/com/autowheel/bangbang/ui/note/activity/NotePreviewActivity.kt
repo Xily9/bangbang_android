@@ -39,7 +39,7 @@ class NotePreviewActivity : BackBaseActivity() {
         tv_signature.text = UserUtil.profile.signature
         Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(iv_avatar)
+            .error(R.mipmap.ic_launcher).into(iv_avatar)
         markwon = Markwon.builder(this)
             .usePlugin(TablePlugin.create(this))
             .usePlugin(GlideImagesPlugin.create(this))

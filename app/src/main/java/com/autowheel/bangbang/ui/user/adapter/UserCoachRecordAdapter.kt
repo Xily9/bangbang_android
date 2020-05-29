@@ -27,7 +27,7 @@ class UserCoachRecordAdapter(list: List<CoachBean>?) : BaseAdapter<CoachBean>(li
         holder.tv_all_price.text = "￥${value.price}"
         Glide.with(context).load("$BASE_URL/user/avatar/${value.publisher_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_name.text = value.publisher_nickname
         holder.btn_action1.setOnClickListener {
             btn1Listener.invoke(position)

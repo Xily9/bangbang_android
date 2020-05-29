@@ -5,7 +5,7 @@ import android.graphics.Color
 import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseAdapter
-import com.autowheel.bangbang.model.network.bean.MessageBean
+import com.autowheel.bangbang.model.network.bean.MessageListBean
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.dp2px
 import com.autowheel.bangbang.utils.toTimeStr
@@ -16,13 +16,13 @@ import kotlinx.android.synthetic.main.item_fragment_message.*
 /**
  * Created by Xily on 2020/5/3.
  */
-class MsgAdapter(list: List<MessageBean>?) : BaseAdapter<MessageBean>(list) {
+class MsgAdapter(list: List<MessageListBean>?) : BaseAdapter<MessageListBean>(list) {
     override fun getLayoutId(): Int {
         return R.layout.item_fragment_message
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: MessageBean) {
-        if (value.id == 0 || value.from == 0) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: MessageListBean) {
+        if (value.user_id == 0) {
             holder.iv_avatar.setBackgroundResource(R.drawable.bg_round)
             holder.iv_avatar.imageTintList = ColorStateList.valueOf(Color.WHITE)
             holder.iv_avatar.setPadding(dp2px(10f), dp2px(10f), dp2px(10f), dp2px(10f))
@@ -31,12 +31,12 @@ class MsgAdapter(list: List<MessageBean>?) : BaseAdapter<MessageBean>(list) {
             holder.iv_avatar.background = null
             holder.iv_avatar.imageTintList = null
             holder.iv_avatar.setPadding(0, 0, 0, 0)
-            Glide.with(context).load("$BASE_URL/user/avatar/${value.from}")
+            Glide.with(context).load("$BASE_URL/user/avatar/${value.user_id}")
                 .signature(ObjectKey(UserUtil.avatarUpdateTime))
-                .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+                .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         }
-        holder.tv_nickname.text = value.fromNickname
-        holder.tv_message.text = value.message
-        holder.tv_time.text = value.timestamp.toTimeStr()
+        holder.tv_nickname.text = value.user_nickname
+        holder.tv_message.text = value.last_message
+        holder.tv_time.text = value.date.toTimeStr()
     }
 }

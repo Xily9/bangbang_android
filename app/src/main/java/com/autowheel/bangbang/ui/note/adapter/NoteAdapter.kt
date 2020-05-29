@@ -20,7 +20,7 @@ class NoteAdapter(list: List<NoteBean>?) : BaseAdapter<NoteBean>(list) {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: NoteBean) {
         Glide.with(context).load("$BASE_URL/user/avatar/${value.publisher_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_author.text = "作者：${value.publisher_nickname}"
         holder.tv_title.text = value.title
         holder.tv_content.text = value.content

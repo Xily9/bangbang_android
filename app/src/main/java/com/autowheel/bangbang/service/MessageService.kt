@@ -16,17 +16,21 @@ import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
+import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.MessageBean
+import com.autowheel.bangbang.model.network.bean.ReceiveMessageBean
 import com.autowheel.bangbang.ui.msg.activity.ChatActivity
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.debug
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jeremyliao.liveeventbus.LiveEventBus
 import io.socket.client.IO
 import io.socket.client.Manager
 import io.socket.client.Socket
 import io.socket.engineio.client.Transport
-import org.json.JSONObject
+import java.lang.reflect.Type
+
 
 class MessageService : Service() {
     private val notificationManager: NotificationManager
@@ -139,15 +143,20 @@ class MessageService : Service() {
                 emit("join")
             }.on("sendmsg") {
                 debug(it[0] as String)
-                val message = JSONObject(it[0] as String)
-                val messageBean = MessageBean(
-                    message.getInt("room"),
-                    message.getString("user_nickname"),
-                    UserUtil.profile.uid,
-                    (System.currentTimeMillis() / 1000).toInt(),
-                    message.getString("text")
-                )
-                receiveMessage(messageBean)
+                val type: Type =
+                    object : TypeToken<GeneralResponseBean<ReceiveMessageBean>>() {}.type
+                val message =
+                    Gson().fromJson<GeneralResponseBean<ReceiveMessageBean>>(it[0] as String, type)
+                if (message.code == 0) {
+                    val messageBean = MessageBean(
+                        message.data.room,
+                        message.data.user_nickname,
+                        UserUtil.profile.uid,
+                        (System.currentTimeMillis() / 1000).toInt(),
+                        message.data.content
+                    )
+                    receiveMessage(messageBean)
+                }
             }.on(Socket.EVENT_DISCONNECT) {
                 debug("disconnect")
             }

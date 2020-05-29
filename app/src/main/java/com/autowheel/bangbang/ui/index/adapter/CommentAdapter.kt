@@ -20,7 +20,7 @@ class CommentAdapter(list: List<CoachCommentBean>?) : BaseAdapter<CoachCommentBe
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: CoachCommentBean) {
         Glide.with(context).load("$BASE_URL/user/avatar/${value.publisher_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_nickname.text = value.publisher_nickname
         holder.tv_content.text = value.text
         holder.tv_date.text = value.date

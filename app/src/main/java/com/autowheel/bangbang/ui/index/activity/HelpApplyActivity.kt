@@ -35,7 +35,7 @@ class HelpApplyActivity : BackBaseActivity() {
         userId = intent.getIntExtra("user_id", 0)
         Glide.with(this).load("$BASE_URL/user/avatar/${userId}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(iv_avatar)
+            .error(R.mipmap.ic_launcher).into(iv_avatar)
         loadGrade()
         btn_publish.setOnClickListener {
             apply()

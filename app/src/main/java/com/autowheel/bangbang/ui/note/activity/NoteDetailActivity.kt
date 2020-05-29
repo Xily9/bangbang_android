@@ -90,7 +90,7 @@ class NoteDetailActivity : BackBaseActivity() {
                 tv_signature.text = data.signature
                 Glide.with(this@NoteDetailActivity).load("$BASE_URL/user/avatar/${data.uid}")
                     .signature(ObjectKey(UserUtil.avatarUpdateTime))
-                    .error(R.mipmap.ic_launcher_round).into(iv_avatar)
+                    .error(R.mipmap.ic_launcher).into(iv_avatar)
             }
         }, catchBlock = {
 

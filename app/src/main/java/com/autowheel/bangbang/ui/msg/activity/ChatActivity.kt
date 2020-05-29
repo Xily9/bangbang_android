@@ -15,11 +15,11 @@ import com.autowheel.bangbang.model.network.bean.MessageBean
 import com.autowheel.bangbang.ui.msg.adapter.ChatAdapter
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.gone
+import com.autowheel.bangbang.utils.toastError
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.ObjectKey
-import com.google.gson.Gson
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.vanniktech.emoji.EmojiPopup
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -33,7 +33,6 @@ class ChatActivity : BackBaseActivity() {
     var totalDataCount = 0
     var page = 1
     private var id = -1
-    private var itemId = 0
     private var list = arrayListOf<MessageBean>()
     private lateinit var adapter: ChatAdapter
     private lateinit var emojiPopup: EmojiPopup
@@ -47,7 +46,6 @@ class ChatActivity : BackBaseActivity() {
 
     override fun initViews(savedInstanceState: Bundle?) {
         id = intent.getIntExtra("id", -1)
-        itemId = intent.getIntExtra("itemId", 0)
         initLiveEventBus()
         initRecycleView()
         if (id == 0) {
@@ -56,7 +54,6 @@ class ChatActivity : BackBaseActivity() {
         if (id >= 0) {
             getNickName()
             getAvatar()
-            getItem()
             loadData()
             layout_send.setOnClickListener {
                 if (input_text.text.toString() == "") {
@@ -67,13 +64,12 @@ class ChatActivity : BackBaseActivity() {
                         "",
                         id,
                         (System.currentTimeMillis() / 1000).toInt(),
-                        input_text.text.toString(),
-                        itemId
+                        input_text.text.toString()
                     )
                     LiveEventBus.get("messageEvent", MessageEventBean::class.java)
                         .post(MessageEventBean().apply {
                             type = 1
-                            message = Gson().toJson(messageBean)
+                            message = input_text.text.toString()
                         })
                     list.add(messageBean)
                     input_text.setText("")
@@ -119,7 +115,7 @@ class ChatActivity : BackBaseActivity() {
         if (id > 0) {
             Glide.with(this).load("$BASE_URL/user/avatar/${id}")
                 .signature(ObjectKey(UserUtil.avatarUpdateTime))
-                .error(R.mipmap.ic_launcher_round).into(object : CustomTarget<Drawable>() {
+                .error(R.mipmap.ic_launcher).into(object : CustomTarget<Drawable>() {
                     override fun onLoadCleared(placeholder: Drawable?) {
                     }
 
@@ -168,6 +164,18 @@ class ChatActivity : BackBaseActivity() {
     }
 
     private fun loadData() {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getHistoryMsg(id)
+            if (result.code == 0) {
+                list.clear()
+                list.addAll(result.data)
+                adapter.notifyDataSetChanged()
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            toastError("网络请求出错!")
+        })
         /*RetrofitHelper.baseApi.getPeerMessage(id.toString(), itemId.toString())
             .bindToLifecycle()
             .applySchedulers()
@@ -192,12 +200,6 @@ class ChatActivity : BackBaseActivity() {
                 it.printStackTrace()
                 showMessage(it.message ?: "")
             })*/
-    }
-
-    private fun getItem() {
-        if (itemId > 0) {
-
-        }
     }
 
     override fun onResume() {

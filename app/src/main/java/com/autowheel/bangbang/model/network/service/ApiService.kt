@@ -194,5 +194,11 @@ interface ApiService {
     @GET("/assist/myassist")
     suspend fun getUserHelp(): GeneralResponseBean<List<UserHelpBean>>
 
+    @GET("/msg/msglist")
+    suspend fun getMsgList(): GeneralResponseBean<List<MessageListBean>>
+
+    @GET("/msg/history")
+    suspend fun getHistoryMsg(@Query("user_id") uid: Int): GeneralResponseBean<List<MessageBean>>
+
 
 }

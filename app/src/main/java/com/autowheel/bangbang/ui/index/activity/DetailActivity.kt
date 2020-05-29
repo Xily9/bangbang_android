@@ -82,7 +82,7 @@ class DetailActivity : BackBaseActivity() {
                 tv_signature.text = data.signature
                 Glide.with(this@DetailActivity).load("$BASE_URL/user/avatar/${data.uid}")
                     .signature(ObjectKey(UserUtil.avatarUpdateTime))
-                    .error(R.mipmap.ic_launcher_round).into(iv_avatar)
+                    .error(R.mipmap.ic_launcher).into(iv_avatar)
                 layout_chat.setOnClickListener {
                     startActivity<ChatActivity>("id" to uid, "itemId" to id)
                 }

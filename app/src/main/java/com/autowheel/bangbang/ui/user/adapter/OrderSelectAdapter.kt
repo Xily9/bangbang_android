@@ -28,7 +28,7 @@ class OrderSelectAdapter(list: List<CoachBookListBean.BookUserlist>?) :
         holder.rb_select.isChecked = value.select
         Glide.with(context).load("$BASE_URL/user/avatar/${value.uid}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.itemView.setOnClickListener {
             if (!value.select) {
                 holder.rb_select.isChecked = true

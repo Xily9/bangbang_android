@@ -22,7 +22,7 @@ class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(lis
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: UserHelpBean) {
         Glide.with(context).load("$BASE_URL/user/avatar/${value.assisted_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_name.text = value.assisted_nickname
         holder.tv_subject.text = value.course
         holder.btn_clock.setOnClickListener {

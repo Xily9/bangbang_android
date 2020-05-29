@@ -24,7 +24,7 @@ class UserEvaluateAdapter(list: List<CoachCommentBean>?) : BaseAdapter<CoachComm
         holder.tv_date.text = value.date
         Glide.with(context).load("$BASE_URL/user/avatar/${value.publisher_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(holder.iv_avatar)
+            .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.btn_add.setOnClickListener {
             btnListener.invoke(position)
         }

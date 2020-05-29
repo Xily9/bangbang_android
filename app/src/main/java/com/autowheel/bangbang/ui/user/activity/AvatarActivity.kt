@@ -63,7 +63,7 @@ class AvatarActivity : BackBaseActivity() {
     private fun initData() {
         Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
-            .error(R.mipmap.ic_launcher_round).into(iv_avatar)
+            .error(R.mipmap.ic_launcher).into(iv_avatar)
     }
 
     private fun camera() {
