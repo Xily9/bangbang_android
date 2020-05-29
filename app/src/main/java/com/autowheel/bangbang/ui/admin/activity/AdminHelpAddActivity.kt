@@ -13,7 +13,7 @@ class AdminHelpAddActivity : BackBaseActivity() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_admin_helper_add
+        return  R.layout.activity_admin_helper_add
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
