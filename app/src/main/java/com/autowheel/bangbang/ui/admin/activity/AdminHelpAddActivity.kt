@@ -12,7 +12,7 @@ class AdminHelpAddActivity : BackBaseActivity() {
         return ""
     }
 
-    override fun  getLayoutId(): Int {
+    override fun getLayoutId(): Int {
         return  R.layout.activity_admin_helper_add
     }
 
