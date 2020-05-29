@@ -7,7 +7,7 @@
     <Button
         android:id="@+id/btn_edit"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="54dp"
         android:layout_marginTop="39dp"
         android:background="@drawable/bg_btn"
         android:text="确认修改"
