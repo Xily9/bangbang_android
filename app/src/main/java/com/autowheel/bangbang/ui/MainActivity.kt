@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
 import com.autowheel.bangbang.service.MessageService
+import com.autowheel.bangbang.ui.admin.activity.AdminMainActivity
 import com.autowheel.bangbang.ui.index.activity.PublishActivity
 import com.autowheel.bangbang.ui.index.fragment.IndexFragment
 import com.autowheel.bangbang.ui.msg.fragment.MsgFragment
@@ -41,6 +42,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             return
         }
         if (UserUtil.isAdmin) {
+            startActivity<AdminMainActivity>()
             finish()
             return
         }

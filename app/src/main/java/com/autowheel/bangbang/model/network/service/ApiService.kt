@@ -181,7 +181,7 @@ interface ApiService {
         @Field("course") course: String,
         @Field("grade") grade: String,
         @Field("course_token") courseToken: String,
-        @Field("note") note: String
+        @Field("complement") complement: String
     ): GeneralResponseBean<Any>
 
     @Multipart
@@ -194,11 +194,25 @@ interface ApiService {
     @GET("/assist/myassist")
     suspend fun getUserHelp(): GeneralResponseBean<List<UserHelpBean>>
 
+    @POST("/assist/reward")
+    @FormUrlEncoded
+    suspend fun rewardHelp(@Field("couple_id") coupleId: Int): GeneralResponseBean<Any>
+
     @GET("/msg/msglist")
     suspend fun getMsgList(): GeneralResponseBean<List<MessageListBean>>
 
     @GET("/msg/history")
     suspend fun getHistoryMsg(@Query("user_id") uid: Int): GeneralResponseBean<List<MessageBean>>
 
+    @POST("/admin/add")
+    @FormUrlEncoded
+    suspend fun addHelper(@Field("user_id") userId: Int, @Field("course") course: String): GeneralResponseBean<Any>
+
+    @POST("/admin/approve")
+    @FormUrlEncoded
+    suspend fun approveHelp(@Field("couple_id") coupleId: Int): GeneralResponseBean<Any>
+
+    @GET("/admin/list")
+    suspend fun getHelpApproveList(): GeneralResponseBean<List<HelpApproveListBean>>
 
 }

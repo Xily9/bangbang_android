@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseFragment
-import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.ProfileBean
@@ -112,7 +111,7 @@ class UserFragment : BaseFragment() {
             .setTitle("退出登录")
             .setMessage("确认要退出登录吗?")
             .setPositiveButton("确认") { dialog, which ->
-                DataManager.clearUserPref()
+                UserUtil.clear()
                 startActivity<LoginActivity>()
                 requireActivity().finish()
             }

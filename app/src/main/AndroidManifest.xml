@@ -68,6 +68,9 @@
         <activity android:name=".ui.user.activity.UserHelpActivity" />
         <activity android:name=".ui.index.activity.HelpPickActivity" />
         <activity android:name=".ui.admin.activity.AdminMainActivity" />
+        <activity android:name=".ui.admin.activity.AdminHelpAddActivity" />
+        <activity android:name=".ui.admin.activity.AdminHelpApproveActivity" />
+        <activity android:name=".ui.admin.activity.AdminHelpRewardActivity" />
 
         <service android:name=".service.MessageService" />
     </application>

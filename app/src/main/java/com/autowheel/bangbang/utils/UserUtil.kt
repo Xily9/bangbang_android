@@ -1,6 +1,7 @@
 package com.autowheel.bangbang.utils
 
 import com.autowheel.bangbang.model.DataManager
+import com.autowheel.bangbang.model.network.bean.ProfileBean
 
 /**
  * Created by Xily on 2020/4/6.
@@ -30,4 +31,11 @@ object UserUtil {
             field = value
         }
 
+    fun clear() {
+        DataManager.clearUserPref()
+        isVerify = false
+        isAdmin = false
+        token = ""
+        profile = ProfileBean(0, "", "", "", "")
+    }
 }

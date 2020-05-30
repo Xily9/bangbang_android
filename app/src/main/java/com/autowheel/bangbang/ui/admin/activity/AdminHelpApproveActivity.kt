@@ -1,31 +1,29 @@
-package com.autowheel.bangbang.ui.user.activity
+package com.autowheel.bangbang.ui.admin.activity
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
-import com.autowheel.bangbang.model.network.bean.UserHelpBean
-import com.autowheel.bangbang.ui.index.activity.HelpPickActivity
-import com.autowheel.bangbang.ui.user.adapter.UserHelpAdapter
-import com.autowheel.bangbang.utils.startActivity
+import com.autowheel.bangbang.model.network.bean.HelpApproveListBean
+import com.autowheel.bangbang.ui.admin.adapter.AdminHelpApproveAdapter
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
 import com.autowheel.bangbang.utils.toastSuccess
-import kotlinx.android.synthetic.main.activity_user_help.*
+import kotlinx.android.synthetic.main.activity_admin_help_approve.*
 
 /**
- * Created by Xily on 2020/5/25.
+ * Created by Xily on 2020/5/29.
  */
-class UserHelpActivity : BackBaseActivity() {
-    private lateinit var adapter: UserHelpAdapter
-    private val list = arrayListOf<UserHelpBean>()
+class AdminHelpApproveActivity : BackBaseActivity() {
+    private lateinit var adapter: AdminHelpApproveAdapter
+    private var list = arrayListOf<HelpApproveListBean>()
     override fun getToolbarTitle(): String {
-        return "我的帮扶"
+        return "帮扶批准"
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_user_help
+        return R.layout.activity_admin_help_approve
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
@@ -38,26 +36,21 @@ class UserHelpActivity : BackBaseActivity() {
     }
 
     private fun initRecyclerView() {
-        rv_help.layoutManager = LinearLayoutManager(this)
-        adapter = UserHelpAdapter(list)
-        adapter.btnApplyListener = {
-            val data = list[it]
-            startActivity<HelpPickActivity>("id" to data.couple_id)
+        rv_approve.layoutManager = LinearLayoutManager(this)
+        adapter = AdminHelpApproveAdapter(list)
+        adapter.listener = {
+            approveHelp(it, list[it].assistants[list[it].selectIndex - 1].couple_id)
         }
-        adapter.btnPickListener = {
-            val data = list[it]
-            rewardHelp(it, data.couple_id)
-        }
-        rv_help.adapter = adapter
+        rv_approve.adapter = adapter
     }
 
     private fun loadData() {
         swipe_refresh_layout.isRefreshing = true
         launch(tryBlock = {
-            val result = RetrofitHelper.getApiService().getUserHelp()
+            val result = RetrofitHelper.getApiService().getHelpApproveList()
             if (result.code == 0) {
                 list.clear()
-                list.addAll(result.data)
+                list.addAll(result.data.filter { it.assistants.isNotEmpty() })
                 adapter.notifyDataSetChanged()
                 if (list.isEmpty()) {
                     toastInfo("空空如也")
@@ -66,17 +59,18 @@ class UserHelpActivity : BackBaseActivity() {
                 toastError("加载失败")
             }
         }, catchBlock = {
-            toastError("加载失败")
+            it.printStackTrace()
+            toastError("网络请求出错")
         }, finallyBlock = {
             swipe_refresh_layout.isRefreshing = false
         })
     }
 
-    private fun rewardHelp(position: Int, id: Int) {
+    private fun approveHelp(position: Int, coupleId: Int) {
         launch(tryBlock = {
-            val result = RetrofitHelper.getApiService().rewardHelp(id)
+            val result = RetrofitHelper.getApiService().approveHelp(coupleId)
             if (result.code == 0) {
-                toastSuccess("申请成功!")
+                toastSuccess("批准帮扶成功！")
                 list.removeAt(position)
                 adapter.notifyDataSetChanged()
             } else {
@@ -85,6 +79,8 @@ class UserHelpActivity : BackBaseActivity() {
         }, catchBlock = {
             it.printStackTrace()
             toastError("网络请求出错!")
+        }, finallyBlock = {
+
         })
     }
 }

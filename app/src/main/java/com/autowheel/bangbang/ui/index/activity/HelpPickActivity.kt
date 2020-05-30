@@ -4,7 +4,10 @@ import android.Manifest
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,8 +34,9 @@ import kotlinx.android.synthetic.main.layout_dialog_imgtype.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.BufferedOutputStream
 import java.io.File
-import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 
 /**
@@ -40,7 +44,7 @@ import java.io.IOException
  */
 class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
     private lateinit var dialog: Dialog
-    private var file: File? = null
+    private var bitmap: Bitmap? = null
     private var helpId = 0
     override fun getToolbarTitle(): String {
         return "帮扶打卡"
@@ -54,10 +58,10 @@ class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
         helpId = intent.getIntExtra("id", 0)
         initUploadImageDialog()
         btn_clock.setOnClickListener {
-            if (file == null) {
+            if (bitmap == null) {
                 toastError("请先选择图片!")
             } else {
-                pick(file!!)
+                pick(bitmap!!)
             }
         }
     }
@@ -152,14 +156,19 @@ class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 1 -> {
-                    file = File(externalCacheDir, "output_image.jpg").also {
+                    bitmap = decodeFileToBitmapByDegree(
+                        File(
+                            externalCacheDir,
+                            "output_image.jpg"
+                        ).path
+                    )?.also {
                         setImage(it)
                     }
                 }
                 2 -> {
                     val imagePath: String? = FileUtil.getPath(this, data?.data!!)
                     if (imagePath != null) {
-                        file = File(imagePath).also {
+                        bitmap = decodeFileToBitmapByDegree(imagePath)?.also {
                             setImage(it)
                         }
                     } else {
@@ -170,12 +179,17 @@ class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun setImage(file: File) {
-        iv_upload.setImageBitmap(BitmapFactory.decodeStream(FileInputStream(file)))
+    private fun setImage(bitmap: Bitmap) {
+        iv_upload.setImageBitmap(bitmap)
         group_upload.gone()
     }
 
-    private fun pick(file: File) {
+    private fun pick(bitmap: Bitmap) {
+        val file = File(externalCacheDir, "${System.currentTimeMillis()}.jpg")
+        val bos = BufferedOutputStream(FileOutputStream(file))
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        bos.flush()
+        bos.close()
         val requestFile =
             RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
@@ -203,4 +217,56 @@ class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
         })
     }
 
+    private fun readPictureDegree(path: String): Int {
+        var degree = 0
+        try {
+            val exifInterface = ExifInterface(path)
+            val orientation = exifInterface.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
+            )
+            when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> degree = 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> degree = 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> degree = 270
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return degree
+    }
+
+    private fun decodeFileToBitmapByDegree(path: String): Bitmap? {
+        val degree = readPictureDegree(path).toFloat()
+        val bm = BitmapFactory.decodeFile(path)
+        var returnBm: Bitmap? = null
+        // 根据旋转角度，生成旋转矩阵
+        val matrix = Matrix()
+        matrix.postRotate(degree)
+        val less = if (bm.width > bm.height)
+            bm.height
+        else
+            bm.width
+        var i = 1f
+        if (less > 1080) {
+            i = 1080f / less
+        }
+        matrix.postScale(i, i)
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(
+                bm, 0, 0, bm.width,
+                bm.height, matrix, true
+            )
+        } catch (e: OutOfMemoryError) {
+        }
+
+        if (returnBm == null) {
+            returnBm = bm
+        }
+        if (bm != returnBm) {
+            bm.recycle()
+        }
+        return returnBm
+    }
 }
