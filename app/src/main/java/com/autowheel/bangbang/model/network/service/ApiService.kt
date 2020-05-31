@@ -219,9 +219,16 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun rewardApprove(@Field("couple_id") coupleId: Int): GeneralResponseBean<Any>
 
+    @POST("/admin/reject")
+    @FormUrlEncoded
+    suspend fun rewardReject(@Field("couple_id") coupleId: Int): GeneralResponseBean<Any>
+
     @GET("/admin/rewardlist")
     suspend fun getHelpRewardList(): GeneralResponseBean<List<HelpRewardListBean>>
 
     @GET("/admin/pickup")
     suspend fun getHelpRewardPickUpHistory(@Query("couple_id") coupleId: Int): GeneralResponseBean<List<HelpRewardPickUpBean>>
+
+    @GET("/admin/access")
+    suspend fun getHelpRewardHistory(): GeneralResponseBean<List<HelpRewardHistoryBean>>
 }

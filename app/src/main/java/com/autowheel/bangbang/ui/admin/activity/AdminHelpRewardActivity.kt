@@ -1,6 +1,8 @@
 package com.autowheel.bangbang.ui.admin.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
@@ -43,7 +45,7 @@ class AdminHelpRewardActivity : BackBaseActivity() {
             agree(it, list[it].couple_id)
         }
         adapter.btnDisagreeListener = {
-
+            disagree(it, list[it].couple_id)
         }
         adapter.btnPickUpListener = {
             startActivity<AdminHelpRewardPickUpActivity>("id" to list[it].couple_id)
@@ -85,5 +87,35 @@ class AdminHelpRewardActivity : BackBaseActivity() {
         }, finallyBlock = {
 
         })
+    }
+
+    private fun disagree(position: Int, id: Int) {
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().rewardReject(id)
+            if (result.code == 0) {
+                toastSuccess("拒绝成功!")
+                list.removeAt(position)
+                adapter.notifyDataSetChanged()
+            } else {
+                toastError(result.msg)
+            }
+        }, catchBlock = {
+            it.printStackTrace()
+            toastError("网络请求出错!")
+        }, finallyBlock = {
+
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_admin_help_reward_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_history) {
+            startActivity<AdminHelpRewardHistoryActivity>()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
