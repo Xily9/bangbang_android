@@ -7,6 +7,7 @@ import com.autowheel.bangbang.base.BackBaseActivity
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.UserHelpBean
 import com.autowheel.bangbang.ui.index.activity.HelpPickActivity
+import com.autowheel.bangbang.ui.msg.activity.ChatActivity
 import com.autowheel.bangbang.ui.user.adapter.UserHelpAdapter
 import com.autowheel.bangbang.utils.startActivity
 import com.autowheel.bangbang.utils.toastError
@@ -47,6 +48,10 @@ class UserHelpActivity : BackBaseActivity() {
         adapter.btnPickListener = {
             val data = list[it]
             rewardHelp(it, data.couple_id)
+        }
+        adapter.btnChatListener = {
+            val data = list[it]
+            startActivity<ChatActivity>("id" to data.assisted_id)
         }
         rv_help.adapter = adapter
     }

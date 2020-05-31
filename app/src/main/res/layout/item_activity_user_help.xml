@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/btn_clock2"
+        android:id="@+id/btn_pickup"
         android:layout_width="85dp"
         android:layout_height="27dp"
         android:layout_marginEnd="10dp"

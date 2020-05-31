@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.item_activity_user_help.*
 class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(list) {
     var btnPickListener = fun(_: Int) {}
     var btnApplyListener = fun(_: Int) {}
+    var btnChatListener =fun(_: Int){}
     override fun getLayoutId(): Int {
         return R.layout.item_activity_user_help
     }
@@ -25,11 +26,14 @@ class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(lis
             .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_name.text = value.assisted_nickname
         holder.tv_subject.text = value.course
-        holder.btn_chat.setOnClickListener {
+        holder.btn_pickup.setOnClickListener {
             btnPickListener.invoke(position)
         }
         holder.btn_apply.setOnClickListener {
             btnApplyListener.invoke(position)
+        }
+        holder.btn_chat.setOnClickListener{
+            btnChatListener.invoke(position)
         }
     }
 }
