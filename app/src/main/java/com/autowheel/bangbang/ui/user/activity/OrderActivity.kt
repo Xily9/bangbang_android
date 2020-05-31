@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
+import com.autowheel.bangbang.model.bean.MessageEventBean
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.CoachBookListBean
 import com.autowheel.bangbang.ui.user.adapter.OrderAdapter
 import com.autowheel.bangbang.utils.toastError
 import com.autowheel.bangbang.utils.toastInfo
 import com.autowheel.bangbang.utils.toastSuccess
+import com.jeremyliao.liveeventbus.LiveEventBus
 import kotlinx.android.synthetic.main.activity_order.*
 
 /**
@@ -72,6 +74,12 @@ class OrderActivity : BackBaseActivity() {
                 toastSuccess("同意预约成功！记得与被辅导人保持沟通哦~")
                 list.removeAt(position)
                 adapter.notifyDataSetChanged()
+                LiveEventBus.get("messageEvent", MessageEventBean::class.java)
+                    .post(MessageEventBean().apply {
+                        type = 1
+                        message = "我已经同意你的预约啦！"
+                        chatId = uid
+                    })
             } else {
                 toastError(result.msg)
             }

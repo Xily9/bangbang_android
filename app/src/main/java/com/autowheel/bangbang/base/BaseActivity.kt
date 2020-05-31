@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.autowheel.bangbang.service.MessageService
 import com.autowheel.bangbang.utils.setDarkStatusIcon
+import com.autowheel.bangbang.utils.startService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
@@ -32,6 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
         title = ""
         //初始化控件
         initViews(savedInstanceState)
+        startService<MessageService>()
     }
 
     /**

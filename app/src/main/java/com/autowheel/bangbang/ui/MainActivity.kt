@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseActivity
-import com.autowheel.bangbang.service.MessageService
 import com.autowheel.bangbang.ui.admin.activity.AdminMainActivity
 import com.autowheel.bangbang.ui.index.activity.PublishActivity
 import com.autowheel.bangbang.ui.index.fragment.IndexFragment
@@ -17,7 +16,6 @@ import com.autowheel.bangbang.ui.user.activity.LoginActivity
 import com.autowheel.bangbang.ui.user.fragment.UserFragment
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.startActivity
-import com.autowheel.bangbang.utils.startService
 import com.autowheel.bangbang.utils.toastInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -54,7 +52,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         layout_publish_note.setOnClickListener {
             startActivity<NotePublishActivity>()
         }
-        startService<MessageService>()
     }
 
 

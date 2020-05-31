@@ -6,15 +6,15 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BaseAdapter
-import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.network.bean.MessageBean
+import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.dp2px
 import kotlinx.android.synthetic.main.item_chat.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatAdapter(list: List<MessageBean>) : BaseAdapter<MessageBean>(list) {
-    private var id = DataManager.profile.uid
+    private var id = UserUtil.profile.uid
     var rightDrawable: Drawable? = null
     var leftDrawable: Drawable? = null
     override fun getLayoutId(): Int {

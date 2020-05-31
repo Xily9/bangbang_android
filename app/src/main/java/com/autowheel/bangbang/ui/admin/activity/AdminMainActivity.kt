@@ -51,7 +51,9 @@ class AdminMainActivity : BaseActivity() {
         layout_help_approve.setOnClickListener {
             startActivity<AdminHelpApproveActivity>()
         }
-
+        layout_help_point_check.setOnClickListener {
+            startActivity<AdminHelpRewardActivity>()
+        }
     }
 
     private fun getProfile() {

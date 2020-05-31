@@ -215,4 +215,13 @@ interface ApiService {
     @GET("/admin/list")
     suspend fun getHelpApproveList(): GeneralResponseBean<List<HelpApproveListBean>>
 
+    @POST("/admin/reward")
+    @FormUrlEncoded
+    suspend fun rewardApprove(@Field("couple_id") coupleId: Int): GeneralResponseBean<Any>
+
+    @GET("/admin/rewardlist")
+    suspend fun getHelpRewardList(): GeneralResponseBean<List<HelpRewardListBean>>
+
+    @GET("/admin/pickup")
+    suspend fun getHelpRewardPickUpHistory(@Query("couple_id") coupleId: Int): GeneralResponseBean<List<HelpRewardPickUpBean>>
 }

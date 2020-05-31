@@ -20,6 +20,7 @@ import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.MessageBean
 import com.autowheel.bangbang.model.network.bean.ReceiveMessageBean
 import com.autowheel.bangbang.ui.msg.activity.ChatActivity
+import com.autowheel.bangbang.ui.user.activity.OrderActivity
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.debug
 import com.google.gson.Gson
@@ -44,17 +45,21 @@ class MessageService : Service() {
         return null
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onCreate() {
+        super.onCreate()
         initWebSocket()
         initListener()
-        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun initListener() {
         observer = Observer<MessageEventBean> {
+            debug(it.toString())
             when (it.type) {
                 1 -> {
-                    sendMessage(it.message)
+                    if (it.chatId > 0)
+                        sendMessage(it.message, it.chatId)
+                    else
+                        sendMessage(it.message)
                 }
                 2 -> {
                     isChatActivity = it.isChatActivity
@@ -92,8 +97,13 @@ class MessageService : Service() {
     }
 
     private fun showNotification(title: String, message: String, uid: Int) {
-        val intent = Intent(this, ChatActivity::class.java)
-        intent.putExtra("id", uid)
+        val intent = if (uid == 0) {
+            Intent(this, OrderActivity::class.java)
+        } else {
+            Intent(this, ChatActivity::class.java).apply {
+                putExtra("id", uid)
+            }
+        }
         val pendingIntent =
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(this, "chat")
@@ -108,9 +118,9 @@ class MessageService : Service() {
         notificationManager.notify(uid, notification)
     }
 
-    private fun sendMessage(message: String) {
+    private fun sendMessage(message: String, room: Int = chatId) {
         val map = hashMapOf<String, Any>()
-        map["room"] = chatId
+        map["room"] = room
         map["text"] = message
         socket?.emit("getmsg", Gson().toJson(map))
     }
@@ -139,7 +149,6 @@ class MessageService : Service() {
                 }
             }
             on(Socket.EVENT_CONNECT) {
-                debug("connect")
                 emit("join")
             }.on("sendmsg") {
                 debug(it[0] as String)
@@ -157,8 +166,22 @@ class MessageService : Service() {
                     )
                     receiveMessage(messageBean)
                 }
-            }.on(Socket.EVENT_DISCONNECT) {
-                debug("disconnect")
+            }.on("inform") {
+                debug(it[0] as String)
+                val type: Type =
+                    object : TypeToken<GeneralResponseBean<ReceiveMessageBean>>() {}.type
+                val message =
+                    Gson().fromJson<GeneralResponseBean<ReceiveMessageBean>>(it[0] as String, type)
+                if (message.code == 0) {
+                    val messageBean = MessageBean(
+                        message.data.room,
+                        message.data.user_nickname,
+                        UserUtil.profile.uid,
+                        (System.currentTimeMillis() / 1000).toInt(),
+                        message.data.content
+                    )
+                    receiveMessage(messageBean)
+                }
             }
             connect()
         }
