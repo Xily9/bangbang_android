@@ -25,7 +25,7 @@ class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(lis
             .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.tv_name.text = value.assisted_nickname
         holder.tv_subject.text = value.course
-        holder.btn_clock.setOnClickListener {
+        holder.btn_chat.setOnClickListener {
             btnPickListener.invoke(position)
         }
         holder.btn_apply.setOnClickListener {

@@ -57,7 +57,7 @@ class HelpPickActivity : BackBaseActivity(), View.OnClickListener {
     override fun initViews(savedInstanceState: Bundle?) {
         helpId = intent.getIntExtra("id", 0)
         initUploadImageDialog()
-        btn_clock.setOnClickListener {
+        btn_chat.setOnClickListener {
             if (bitmap == null) {
                 toastError("请先选择图片!")
             } else {
