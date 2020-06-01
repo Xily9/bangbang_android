@@ -30,7 +30,7 @@ class AdminHelpAddActivity : BackBaseActivity() {
     private fun addHelper() {
         val userId = et_new_helper.text().toIntOrNull() ?: 0
         val course = et_help_subject.text()
-        if (userId <= 0)  {
+        if (userId <= 0)   {
             toastError("请输入正确的用户id")
         } else if (course.isBlank()) {
             toastError("请输入课程名")
