@@ -1,5 +1,6 @@
 package com.autowheel.bangbang.ui.user.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import com.autowheel.bangbang.base.BaseFragment
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.GeneralResponseBean
 import com.autowheel.bangbang.model.network.bean.ProfileBean
+import com.autowheel.bangbang.service.MessageService
 import com.autowheel.bangbang.ui.user.activity.*
 import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.startActivity
@@ -112,6 +114,7 @@ class UserFragment : BaseFragment() {
             .setMessage("确认要退出登录吗?")
             .setPositiveButton("确认") { dialog, which ->
                 UserUtil.clear()
+                requireActivity().stopService(Intent(requireActivity(), MessageService::class.java))
                 startActivity<LoginActivity>()
                 requireActivity().finish()
             }

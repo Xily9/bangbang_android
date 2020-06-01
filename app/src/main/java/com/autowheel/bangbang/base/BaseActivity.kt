@@ -5,6 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.autowheel.bangbang.service.MessageService
+import com.autowheel.bangbang.utils.UserUtil
 import com.autowheel.bangbang.utils.setDarkStatusIcon
 import com.autowheel.bangbang.utils.startService
 import kotlinx.coroutines.CancellationException
@@ -34,7 +35,8 @@ abstract class BaseActivity : AppCompatActivity() {
         title = ""
         //初始化控件
         initViews(savedInstanceState)
-        startService<MessageService>()
+        if (UserUtil.isLogin && !UserUtil.isAdmin)
+            startService<MessageService>()
     }
 
     /**
