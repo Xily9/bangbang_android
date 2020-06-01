@@ -6,15 +6,15 @@
     android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/btn_pickup"
+        android:id="@+id/btn_apply"
         android:layout_width="85dp"
         android:layout_height="27dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/bg_btn_border"
         android:text="申请综测"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_apply"
-        app:layout_constraintEnd_toStartOf="@+id/btn_apply"
-        app:layout_constraintTop_toTopOf="@+id/btn_apply"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_pickup"
+        app:layout_constraintEnd_toStartOf="@+id/btn_pickup"
+        app:layout_constraintTop_toTopOf="@+id/btn_pickup"
         app:layout_constraintVertical_bias="0.0" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -51,10 +51,10 @@
         tools:text="测试测试" />
 
     <Button
-        android:id="@+id/btn_apply"
+        android:id="@+id/btn_pickup"
         android:layout_width="85dp"
         android:layout_height="27dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/btn_green_border"
         android:text="打卡"
@@ -67,11 +67,11 @@
         android:layout_width="85dp"
         android:layout_height="27dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/bg_btn_border"
         android:text="联系"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_pickup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+        app:layout_constraintTop_toTopOf="@+id/btn_pickup" />
 
     <View
         android:id="@+id/view"

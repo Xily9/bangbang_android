@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_activity_user_help.*
 class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(list) {
     var btnPickListener = fun(_: Int) {}
     var btnApplyListener = fun(_: Int) {}
-    var btnChatListener =fun(_: Int){}
+    var btnChatListener = fun(_: Int) {}
     override fun getLayoutId(): Int {
         return R.layout.item_activity_user_help
     }
@@ -32,7 +32,7 @@ class UserHelpAdapter(list: List<UserHelpBean>?) : BaseAdapter<UserHelpBean>(lis
         holder.btn_apply.setOnClickListener {
             btnApplyListener.invoke(position)
         }
-        holder.btn_chat.setOnClickListener{
+        holder.btn_chat.setOnClickListener {
             btnChatListener.invoke(position)
         }
     }

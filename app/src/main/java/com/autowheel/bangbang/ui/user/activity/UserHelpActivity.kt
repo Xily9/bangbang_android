@@ -1,6 +1,7 @@
 package com.autowheel.bangbang.ui.user.activity
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
@@ -42,12 +43,19 @@ class UserHelpActivity : BackBaseActivity() {
         rv_help.layoutManager = LinearLayoutManager(this)
         adapter = UserHelpAdapter(list)
         adapter.btnApplyListener = {
-            val data = list[it]
-            startActivity<HelpPickActivity>("id" to data.couple_id)
+            AlertDialog.Builder(this)
+                .setTitle("申请综测")
+                .setMessage("确定要申请综测吗?请确认帮扶已经完成并且打卡达到一定天数，否则将影响综测申请审核！")
+                .setPositiveButton("确定") { _, _ ->
+                    val data = list[it]
+                    rewardHelp(it, data.couple_id)
+                }
+                .setNegativeButton("取消", null)
+                .show()
         }
         adapter.btnPickListener = {
             val data = list[it]
-            rewardHelp(it, data.couple_id)
+            startActivity<HelpPickActivity>("id" to data.couple_id)
         }
         adapter.btnChatListener = {
             val data = list[it]
