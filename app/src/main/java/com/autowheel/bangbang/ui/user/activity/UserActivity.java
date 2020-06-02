@@ -36,6 +36,7 @@ public class UserActivity extends BaseViewBindingActivity<ActivityUserBinding> {
 
     private void initData() {
         ProfileBean profileBean = UserUtil.INSTANCE.getProfile();
+        getViewBinding().tvUid.setText(String.valueOf(profileBean.getUid()));
         getViewBinding().tvNickname.setText(profileBean.getNickname());
         getViewBinding().tvEmail.setText(profileBean.getEmail());
         getViewBinding().tvSignature.setText(profileBean.getSignature());
