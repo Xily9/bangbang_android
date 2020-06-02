@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_spread"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="49dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_safe_center"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="49dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_help"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="49dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +110,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_evaluate"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="49dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
-import com.autowheel.bangbang.model.DataManager
 import com.autowheel.bangbang.model.bean.MessageEventBean
 import com.autowheel.bangbang.model.network.RetrofitHelper
 import com.autowheel.bangbang.model.network.bean.MessageBean
@@ -60,7 +59,7 @@ class ChatActivity : BackBaseActivity() {
                     input_text.error = "消息不能为空!"
                 } else {
                     val messageBean = MessageBean(
-                        DataManager.profile.uid,
+                        UserUtil.profile.uid,
                         "",
                         id,
                         (System.currentTimeMillis() / 1000).toInt(),

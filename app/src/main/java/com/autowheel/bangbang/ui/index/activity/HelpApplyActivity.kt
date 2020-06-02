@@ -66,18 +66,23 @@ class HelpApplyActivity : BackBaseActivity() {
 
     private fun apply() {
         launch(tryBlock = {
-            val gradeBean = list[spinner.selectedIndex]
-            val result = RetrofitHelper.getApiService().applyHelp(
-                userId, gradeBean.name,
-                gradeBean.point,
-                gradeBean.token,
-                et_note.text()
-            )
-            if (result.code == 0) {
-                toastSuccess("申请成功,正在等待审核")
-                finish()
+            if (list.isEmpty()) {
+                toastError("课程加载不成功或没有可关联课程，请重新进入后再试")
+                return@launch
             } else {
-                toastError(result.msg)
+                val gradeBean = list[spinner.selectedIndex]
+                val result = RetrofitHelper.getApiService().applyHelp(
+                    userId, gradeBean.name,
+                    gradeBean.point,
+                    gradeBean.token,
+                    et_note.text()
+                )
+                if (result.code == 0) {
+                    toastSuccess("申请成功,正在等待审核")
+                    finish()
+                } else {
+                    toastError(result.msg)
+                }
             }
         }, catchBlock = {
             it.printStackTrace()
