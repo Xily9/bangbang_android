@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.autowheel.bangbang.BASE_URL
 import com.autowheel.bangbang.R
 import com.autowheel.bangbang.base.BackBaseActivity
@@ -28,15 +27,12 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
  * Created by Xily on 2020/4/5.
  */
 class ChatActivity : BackBaseActivity() {
-    var isLoadingMore = false
-    var totalDataCount = 0
-    var page = 1
     private var id = -1
     private var list = arrayListOf<MessageBean>()
     private lateinit var adapter: ChatAdapter
     private lateinit var emojiPopup: EmojiPopup
     override fun getToolbarTitle(): String {
-        return ""
+        return if (id == 0) "系统消息" else ""
     }
 
     override fun getLayoutId(): Int {
@@ -47,13 +43,12 @@ class ChatActivity : BackBaseActivity() {
         id = intent.getIntExtra("id", -1)
         initLiveEventBus()
         initRecycleView()
+        getNickName()
+        loadData()
         if (id == 0) {
             layout_chat.gone()
-        }
-        if (id >= 0) {
-            getNickName()
+        } else {
             getAvatar()
-            loadData()
             layout_send.setOnClickListener {
                 if (input_text.text.toString() == "") {
                     input_text.error = "消息不能为空!"
@@ -76,15 +71,15 @@ class ChatActivity : BackBaseActivity() {
                     recyclerView.scrollToPosition(adapter.itemCount - 1)
                 }
             }
-        }
-        emojiPopup = EmojiPopup.Builder.fromRootView(ll_root).build(input_text)
-        layout_emoji.setOnClickListener {
-            if (emojiPopup.isShowing) {
-                emojiPopup.dismiss()
-                iv_emoji.setImageResource(R.drawable.ic_tag_faces_white_24dp)
-            } else {
-                emojiPopup.toggle()
-                iv_emoji.setImageResource(R.drawable.ic_keyboard_white_24dp)
+            emojiPopup = EmojiPopup.Builder.fromRootView(ll_root).build(input_text)
+            layout_emoji.setOnClickListener {
+                if (emojiPopup.isShowing) {
+                    emojiPopup.dismiss()
+                    iv_emoji.setImageResource(R.drawable.ic_tag_faces_white_24dp)
+                } else {
+                    emojiPopup.toggle()
+                    iv_emoji.setImageResource(R.drawable.ic_keyboard_white_24dp)
+                }
             }
         }
     }
@@ -98,35 +93,30 @@ class ChatActivity : BackBaseActivity() {
     }
 
     private fun getNickName() {
-        if (id > 0)
-            launch(tryBlock = {
-                val result = RetrofitHelper.getApiService().getProfile(id)
-                if (result.code == 0) {
-                    val data = result.data
-                    toolbar_title.text = data.nickname
-                }
-            })
-        else
-            toolbar_title.text = "系统消息"
+        launch(tryBlock = {
+            val result = RetrofitHelper.getApiService().getProfile(id)
+            if (result.code == 0) {
+                val data = result.data
+                toolbar_title.text = data.nickname
+            }
+        })
     }
 
     private fun getAvatar() {
-        if (id > 0) {
-            Glide.with(this).load("$BASE_URL/user/avatar/${id}")
-                .signature(ObjectKey(UserUtil.avatarUpdateTime))
-                .error(R.mipmap.ic_launcher).into(object : CustomTarget<Drawable>() {
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
+        Glide.with(this).load("$BASE_URL/user/avatar/${id}")
+            .signature(ObjectKey(UserUtil.avatarUpdateTime))
+            .error(R.mipmap.ic_launcher).into(object : CustomTarget<Drawable>() {
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
 
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        adapter.leftDrawable = resource
-                        adapter.notifyDataSetChanged()
-                    }
-                })
-        }
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    adapter.leftDrawable = resource
+                    adapter.notifyDataSetChanged()
+                }
+            })
         Glide.with(this).load("$BASE_URL/user/avatar/${UserUtil.profile.uid}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
             .into(object : CustomTarget<Drawable>() {
@@ -149,17 +139,6 @@ class ChatActivity : BackBaseActivity() {
         recyclerView.layoutManager = layoutManager
         adapter = ChatAdapter(list)
         recyclerView.adapter = adapter
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val position = layoutManager.findFirstVisibleItemPosition()
-                val count = layoutManager.itemCount
-                if (!isLoadingMore && totalDataCount > count && dy > 0 && position < 5) {
-                    page++
-                    loadData()
-                }
-            }
-        })
     }
 
     private fun loadData() {
@@ -175,30 +154,6 @@ class ChatActivity : BackBaseActivity() {
         }, catchBlock = {
             toastError("网络请求出错!")
         })
-        /*RetrofitHelper.baseApi.getPeerMessage(id.toString(), itemId.toString())
-            .bindToLifecycle()
-            .applySchedulers()
-            .subscribe({
-                if (checkIsLogin(it)) {
-                    if (!it.isSuccessful) {
-                        throw RuntimeException("${it.code()}:${it.message()}\n${it.errorBody()?.string()}")
-                    }
-                }
-                it.body()?.let {
-                    list.clear()
-                    val sortedList = it.sortedBy {
-                        it.timestamp
-                    }
-                    list.addAll(sortedList)
-                    adapter.notifyDataSetChanged()
-                    *//*if (page == 1) {
-                        recycle.scrollToPosition(adapter.itemCount - 1)
-                    }*//*
-                }
-            }, {
-                it.printStackTrace()
-                showMessage(it.message ?: "")
-            })*/
     }
 
     override fun onResume() {
@@ -221,7 +176,7 @@ class ChatActivity : BackBaseActivity() {
     }
 
     override fun onDestroy() {
-        if (emojiPopup.isShowing) {
+        if (id > 0 && emojiPopup.isShowing) {
             emojiPopup.dismiss()
         }
         super.onDestroy()

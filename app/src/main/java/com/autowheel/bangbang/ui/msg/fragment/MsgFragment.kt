@@ -40,7 +40,7 @@ class MsgFragment : BaseFragment() {
         adapter = MsgAdapter(list)
         adapter.setOnItemClickListener {
             val data = list[it]
-            if (data.user_id == 0) {
+            if (data.user_id == -1) {
                 startActivity<OrderActivity>()
             } else {
                 startActivity<ChatActivity>("id" to data.user_id)
@@ -63,11 +63,11 @@ class MsgFragment : BaseFragment() {
                     MessageListBean(
                         (System.currentTimeMillis() / 1000).toInt(),
                         "及时处理预约信息",
-                        0,
+                        -1,
                         "待处理请求"
                     )
                 )
-                list.addAll(result.data)
+                list.addAll(result.data.sortedByDescending { it.date })
                 adapter.notifyDataSetChanged()
             } else {
                 toastError(result.msg)

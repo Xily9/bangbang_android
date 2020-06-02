@@ -22,7 +22,7 @@ class MsgAdapter(list: List<MessageListBean>?) : BaseAdapter<MessageListBean>(li
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int, value: MessageListBean) {
-        if (value.user_id == 0) {
+        if (value.user_id <= 0) {
             holder.iv_avatar.setBackgroundResource(R.drawable.bg_round)
             holder.iv_avatar.imageTintList = ColorStateList.valueOf(Color.WHITE)
             holder.iv_avatar.setPadding(dp2px(10f), dp2px(10f), dp2px(10f), dp2px(10f))

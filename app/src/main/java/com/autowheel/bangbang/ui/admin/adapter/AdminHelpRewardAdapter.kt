@@ -26,10 +26,10 @@ class AdminHelpRewardAdapter(list: List<HelpRewardListBean>?) :
         position: Int,
         value: HelpRewardListBean
     ) {
-        Glide.with(context).load("$BASE_URL/user/avatar/${value.assistant_id}")
+        Glide.with(context).load("$BASE_URL/user/avatar/${value.assistant_user_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
             .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
-        Glide.with(context).load("$BASE_URL/user/avatar/${value.assisted_id}")
+        Glide.with(context).load("$BASE_URL/user/avatar/${value.assisted_user_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
             .error(R.mipmap.ic_launcher).into(holder.iv_avatar2)
         holder.tv_nickname.text = value.assistant_nickname

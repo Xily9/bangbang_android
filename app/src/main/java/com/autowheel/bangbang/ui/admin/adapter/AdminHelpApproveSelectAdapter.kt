@@ -29,7 +29,7 @@ class AdminHelpApproveSelectAdapter(list: List<HelpApproveListBean.Assistant>?) 
         holder.tv_grade.text = "成绩：${value.grade}"
         holder.tv_subject.text = "关联课程名：${value.course}"
         holder.tv_ps.text = "附言：${value.complement}"
-        Glide.with(context).load("$BASE_URL/user/avatar/${value.assistant_id}")
+        Glide.with(context).load("$BASE_URL/user/avatar/${value.assistant_user_id}")
             .signature(ObjectKey(UserUtil.avatarUpdateTime))
             .error(R.mipmap.ic_launcher).into(holder.iv_avatar)
         holder.itemView.setOnClickListener {

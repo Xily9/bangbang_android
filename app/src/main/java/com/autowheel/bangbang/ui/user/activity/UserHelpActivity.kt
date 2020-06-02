@@ -59,7 +59,7 @@ class UserHelpActivity : BackBaseActivity() {
         }
         adapter.btnChatListener = {
             val data = list[it]
-            startActivity<ChatActivity>("id" to data.assisted_id)
+            startActivity<ChatActivity>("id" to data.assisted_user_id)
         }
         rv_help.adapter = adapter
     }

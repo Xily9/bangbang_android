@@ -77,7 +77,6 @@ class MessageService : Service() {
     }
 
     private fun receiveMessage(messageBean: MessageBean) {
-        LiveEventBus.get("message", MessageBean::class.java).post(messageBean)
         if (!isChatActivity || chatId != messageBean.from_user_id) {
             val callback = {
                 val nickName: String = if (messageBean.from_user_id > 0)
@@ -93,11 +92,13 @@ class MessageService : Service() {
             } else {
                 callback.invoke()
             }
+        } else {
+            LiveEventBus.get("message", MessageBean::class.java).post(messageBean)
         }
     }
 
     private fun showNotification(title: String, message: String, uid: Int) {
-        val intent = if (uid == 0) {
+        val intent = if (uid == -1) {
             Intent(this, OrderActivity::class.java)
         } else {
             Intent(this, ChatActivity::class.java).apply {
@@ -174,7 +175,7 @@ class MessageService : Service() {
                     Gson().fromJson<GeneralResponseBean<ReceiveMessageBean>>(it[0] as String, type)
                 if (message.code == 0) {
                     val messageBean = MessageBean(
-                        message.data.room,
+                        -1,
                         message.data.user_nickname,
                         UserUtil.profile.uid,
                         (System.currentTimeMillis() / 1000).toInt(),
